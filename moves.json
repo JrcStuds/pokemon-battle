@@ -1,14 +1,23 @@
 {
-    "tackle": {
+    "Tackle": {
         "type": "normal",
-        "power": 35
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "pp": 35
     },
-    "ember": {
+    "Ember": {
         "type": "fire",
-        "power": 40
+        "category": "special",
+        "power": 40,
+        "accuracy": 100,
+        "pp": 25
     },
-    "vine_whip": {
+    "Vine Whip": {
         "type": "grass",
-        "power": 40
+        "category": "physical",
+        "power": 45,
+        "accuracy": 100,
+        "pp": 25
     }
 }

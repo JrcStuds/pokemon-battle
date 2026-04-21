@@ -1,22 +1,22 @@
 {
-    "charmander": {
+    "Charmander": {
         "type": "fire",
-        "hp": 60,
-        "attack": 100,
-        "defense": 60,
-        "moveset": [
-            "tackle",
-            "ember"
-        ]
+        "hp": 39,
+        "attack": 52,
+        "defense": 43,
+        "sp_attack": 60,
+        "sp_defense": 50,
+        "speed": 65,
+        "moveset": [ "Tackle", "Ember" ]
     },
-    "bulbasaur": {
+    "Bulbasaur": {
         "type": "grass",
-        "hp": 100,
-        "attack": 60,
-        "defense": 100,
-        "moveset": [
-            "tackle",
-            "vine_whip"
-        ]
+        "hp": 45,
+        "attack": 49,
+        "defense": 49,
+        "sp_attack": 65,
+        "sp_defense": 65,
+        "speed": 45,
+        "moveset": [ "Tackle", "Vine Whip" ]
     }
 }
