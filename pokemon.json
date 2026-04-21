@@ -1,0 +1,22 @@
+{
+    "charmander": {
+        "type": "fire",
+        "hp": 60,
+        "attack": 100,
+        "defense": 60,
+        "moveset": [
+            "tackle",
+            "ember"
+        ]
+    },
+    "bulbasaur": {
+        "type": "grass",
+        "hp": 100,
+        "attack": 60,
+        "defense": 100,
+        "moveset": [
+            "tackle",
+            "vine_whip"
+        ]
+    }
+}

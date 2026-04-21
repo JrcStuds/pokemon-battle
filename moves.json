@@ -1,0 +1,14 @@
+{
+    "tackle": {
+        "type": "normal",
+        "power": 35
+    },
+    "ember": {
+        "type": "fire",
+        "power": 40
+    },
+    "vine_whip": {
+        "type": "grass",
+        "power": 40
+    }
+}
