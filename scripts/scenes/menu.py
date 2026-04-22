@@ -1,21 +1,19 @@
 import pygame
-from scripts.ui.scene import SceneBaseClass
-from scripts.ui.text import Text
-from scripts.ui.button import Button
+import assets.config.settings as s
+import scripts.ui as ui
 
 
 
-class Menu(SceneBaseClass):
-    def __init__(self, game, header: str = None):
+class Menu(ui.SceneBaseClass):
+    def __init__(self):
         super().__init__()
-        self.game = game
 
-        self.background = "#ffffff"
+        self.background = "white"
 
-        if header: self.elements.append(Text((0, 0), header))
+        self.elements.append(ui.Text((0, 0), f"pokemon battle", "dodgerblue"))
 
-        self.elements.append(Button(
-            lambda: game.change_scene("menu", "random"),
-            pygame.Rect(100, 100, 50, 20),
-            "change scene"
+        self.elements.append(ui.Button(
+            lambda: s.scene_manager.change_scene(s.scenes["battle"]),
+            pygame.Rect(0, 15, 50, 20),
+            "start battle"
         ))

@@ -1,43 +1,60 @@
-import pygame, random
-import assets.config.settings as settings
-from scripts.scenes.battle import Battle
-from scripts.scenes.menu import Menu
+import pygame
+import assets.config.settings as s
+import scripts.scenes as scenes
+
+
+
+class SceneManager():
+    def __init__(self):
+        self.current_scene = None
+        self.next_scene = None
+    
+    def update(self):
+        if self.next_scene:
+            self.current_scene = self.next_scene
+            self.next_scene = None
+
+    def change_scene(self, scene: object):
+        self.next_scene = scene()
 
 
 
 class Game():
     def __init__(self):
         pygame.init()
-        self.display = pygame.display.set_mode(settings.DISPLAY_SIZE, pygame.SCALED | pygame.RESIZABLE)
+        self.display = pygame.display.set_mode(s.DISPLAY_SIZE, pygame.SCALED | pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.running = True
 
-        self.scene = Menu(self)
+        s.scene_manager = SceneManager()
+        s.scenes = {
+            "menu": scenes.Menu,
+            "battle": scenes.Battle
+        }
+        s.scene_manager.change_scene(s.scenes["menu"])
 
 
     def handle_events(self):
         for event in pygame.event.get():
-            match event.type:
-                
-                case pygame.QUIT:
-                    self.running = False
-
-                case pygame.MOUSEBUTTONDOWN:
-                    for element in self.scene.elements:
-                        if hasattr(element, "is_clicked"):
-                            element.is_clicked(pygame.mouse.get_pos())
+            if event.type == pygame.QUIT:
+                self.running = False
+                break
+            if hasattr(s.scene_manager.current_scene, "handle_event"):
+                s.scene_manager.current_scene.handle_event(event)
 
 
     def update(self):
-        pass
+        if hasattr(s.scene_manager.current_scene, "update"):
+            s.scene_manager.current_scene.update(self.dt)
 
 
     def draw(self):
         self.display.fill("black")
 
         fblits = []
-        fblits.append((self.scene.draw(), (0, 0)))
+        if hasattr(s.scene_manager.current_scene, "draw"):
+            fblits.extend(s.scene_manager.current_scene.draw())
         self.display.fblits(fblits)
 
         pygame.display.flip()
@@ -45,17 +62,13 @@ class Game():
 
     def run(self):
         while self.running:
+            s.scene_manager.update()
             self.handle_events()
             self.update()
             self.draw()
-            self.dt = self.clock.tick(settings.FPS) / 1000
+            self.dt = self.clock.tick(s.FPS) / 1000
         
         pygame.quit()
-
-
-    def change_scene(self, scene, type):
-        if scene == "menu" and type == "random":
-            self.scene = Menu(self, f"menu {random.randint(1, 10)}")
 
 
 
