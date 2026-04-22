@@ -5,7 +5,7 @@ class Move():
     def __init__(self, name):
         self.name = name
 
-        with open("data/databases/moves.json", "r") as file:
+        with open("assets/data/moves.json", "r") as file:
             moves_db = json.load(file)
 
         self.type = moves_db[name]["type"]
@@ -18,4 +18,6 @@ class Move():
     def execute(self, user, target):
         atk_stat = user.attack if self.category == "physical" else user.sp_attack
         def_stat = target.defense if self.category == "physical" else target.sp_defense
-        target.hp -= (((2/5)+2)*self.power*(atk_stat/def_stat))/50+2
+
+        damage = (((2/5)+2)*self.power*(atk_stat/def_stat))/50+2
+        target.take_damage(damage)

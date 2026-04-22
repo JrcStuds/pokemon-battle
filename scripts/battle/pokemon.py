@@ -6,7 +6,7 @@ class Pokemon():
     def __init__(self, name):
         self.name = name
 
-        with open("data/databases/pokemon.json", "r") as file:
+        with open("assets/data/pokemon.json", "r") as file:
             pokemon_db = json.load(file)
 
         self.type = pokemon_db[name]["type"]
@@ -17,3 +17,8 @@ class Pokemon():
         self.sp_defense = pokemon_db[name]["sp_defense"]
         self.speed = pokemon_db[name]["speed"]
         self.moveset = [Move(move) for move in pokemon_db[name]["moveset"]]
+
+
+    def take_damage(self, damage):
+        self.hp -= damage
+        return

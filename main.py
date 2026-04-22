@@ -1,28 +1,62 @@
-from scripts.battle import Battle
+import pygame, random
+import assets.config.settings as settings
+from scripts.battle.battle import Battle
+from scripts.menu.menu import Menu
 
 
 
-battle = Battle()
+class Game():
+    def __init__(self):
+        pygame.init()
+        self.display = pygame.display.set_mode(settings.DISPLAY_SIZE, pygame.SCALED | pygame.RESIZABLE)
+        self.clock = pygame.time.Clock()
+        self.dt = 0
+        self.running = True
 
-turn = 1
-running = True
-while running:
-    attacker = battle.player_one.pokemon[0] if turn == 1 else battle.player_two.pokemon[0]
-    defender = battle.player_one.pokemon[0] if turn == 2 else battle.player_two.pokemon[0]
-
-
-    if round(attacker.hp) <= 0:
-        print(f"{defender.name} Wins!")
-        running = False
-        continue
+        self.scene = Menu()
 
 
-    print(f"Attacker: {attacker.name}, HP: {round(attacker.hp)}, Moves: {[move.name for move in attacker.moveset]}")
-    print(f"Defender: {defender.name}, HP: {round(defender.hp)}, Moves: {[move.name for move in defender.moveset]}")
+    def handle_events(self):
+        for event in pygame.event.get():
+            match event.type:
+                
+                case pygame.QUIT:
+                    self.running = False
 
-    move = int(input(f"which move would {attacker.name} like to execute? "))
+                case pygame.KEYDOWN:
+                    match event.key:
+                        case pygame.K_SPACE:
+                            self.scene = Menu(f"This is menu {random.randint(1, 10)}")
+                            print("spacebar pressed")
 
-    attacker.moveset[move].execute(attacker, defender)
-    print(f"{attacker.name} used {attacker.moveset[move].name} on {defender.name}\n")
 
-    turn = 2 if turn == 1 else 1
+    def update(self):
+        pass
+
+
+    def draw(self):
+        self.display.fill("black")
+
+        fblits = []
+        fblits.append((self.scene.draw(), (0, 0)))
+        self.display.fblits(fblits)
+
+        pygame.display.flip()
+
+
+    def run(self):
+        while self.running:
+            self.handle_events()
+            self.update()
+            self.draw()
+            self.dt = self.clock.tick(60) / 1000
+        
+        pygame.quit()
+
+
+
+if __name__ == "__main__":
+    game = Game()
+    game.run()
+
+
