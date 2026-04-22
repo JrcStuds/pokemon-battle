@@ -1,5 +1,5 @@
-from .pokemon import Pokemon
-from .battler import Battler
+from scripts.battle.pokemon import Pokemon
+from scripts.battle.battler import Battler
 
 
 class Battle():

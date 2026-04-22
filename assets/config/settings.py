@@ -1,1 +1,2 @@
 DISPLAY_SIZE = (240, 160)
+FPS = 60

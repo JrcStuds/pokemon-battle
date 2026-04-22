@@ -1,7 +1,7 @@
 import pygame, random
 import assets.config.settings as settings
-from scripts.battle.battle import Battle
-from scripts.menu.menu import Menu
+from scripts.scenes.battle import Battle
+from scripts.scenes.menu import Menu
 
 
 
@@ -13,7 +13,7 @@ class Game():
         self.dt = 0
         self.running = True
 
-        self.scene = Menu()
+        self.scene = Menu(self)
 
 
     def handle_events(self):
@@ -23,11 +23,10 @@ class Game():
                 case pygame.QUIT:
                     self.running = False
 
-                case pygame.KEYDOWN:
-                    match event.key:
-                        case pygame.K_SPACE:
-                            self.scene = Menu(f"This is menu {random.randint(1, 10)}")
-                            print("spacebar pressed")
+                case pygame.MOUSEBUTTONDOWN:
+                    for element in self.scene.elements:
+                        if hasattr(element, "is_clicked"):
+                            element.is_clicked(pygame.mouse.get_pos())
 
 
     def update(self):
@@ -49,9 +48,14 @@ class Game():
             self.handle_events()
             self.update()
             self.draw()
-            self.dt = self.clock.tick(60) / 1000
+            self.dt = self.clock.tick(settings.FPS) / 1000
         
         pygame.quit()
+
+
+    def change_scene(self, scene, type):
+        if scene == "menu" and type == "random":
+            self.scene = Menu(self, f"menu {random.randint(1, 10)}")
 
 
 
