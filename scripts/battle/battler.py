@@ -12,6 +12,6 @@ class Battler(scenes.SceneBaseClass):
         self.pokemon = pokemon
 
         self.add_elements(
-            ui.Text((0, 0), self.pokemon[0].name),
-            ui.Text((100, 0), str(self.pokemon[0].hp))
+            ui.Text((0, self.id*20+20), self.pokemon[0].name),
+            ui.Text((100, self.id*20+20), str(self.pokemon[0].hp))
         )

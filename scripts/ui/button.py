@@ -25,5 +25,6 @@ class Button():
 
     
     def click(self):
-        self.callback()
+        if self.callback:
+            self.callback()
     

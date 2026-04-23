@@ -12,9 +12,6 @@ class Battle(scenes.SceneBaseClass):
         super().__init__()
 
         self.menu_stack = []
-        
-
-
 
         self.background = "white"
         self.elements.append(ui.Text((0, 0), "Battle", "dodgerblue"))
@@ -22,12 +19,7 @@ class Battle(scenes.SceneBaseClass):
         self.player = battle.Battler(pygame.Rect(0, 20, g.DISPLAY_RECT.width, 20), 0, [ battle.Pokemon("Charmander") ])
         self.opponent = battle.Battler(pygame.Rect(0, 40, g.DISPLAY_RECT.width, 20), 1, [ battle.Pokemon("Bulbasaur") ])
 
-        """self.add_elements(self.player, self.opponent)
-        self.add_elements(ui.Button(
-            lambda: g.scene_manager.change_scene(g.scenes["menu"]),
-            pygame.Rect(0, 60, 50, 20),
-            "back to menu"
-        ))"""
+        self.add_elements(self.player, self.opponent)
 
         GeneralBattleMenu(battle=self).enter_state()
     
