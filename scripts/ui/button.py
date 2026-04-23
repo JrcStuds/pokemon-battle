@@ -1,10 +1,10 @@
 import pygame
-import assets.config.settings as settings
+import assets.config.globals as g
 
 
 
 class Button():
-    def __init__( self, callback, rect: pygame.Rect, text: str = None):
+    def __init__(self, callback, rect: pygame.Rect, text: str = None):
         self.font = pygame.font.SysFont("arial", 8)
 
         self.callback = callback
@@ -24,7 +24,6 @@ class Button():
         return blits
 
     
-    def is_clicked(self, mouse_pos: pygame.Vector2):
-        if self.rect.collidepoint(mouse_pos):
-            self.callback()
+    def click(self):
+        self.callback()
     

@@ -1,38 +1,20 @@
 import pygame
-import assets.config.settings as s
+import assets.config.globals as g
 import scripts.scenes as scenes
-
-
-
-class SceneManager():
-    def __init__(self):
-        self.current_scene = None
-        self.next_scene = None
-    
-    def update(self):
-        if self.next_scene:
-            self.current_scene = self.next_scene
-            self.next_scene = None
-
-    def change_scene(self, scene: object):
-        self.next_scene = scene()
 
 
 
 class Game():
     def __init__(self):
         pygame.init()
-        self.display = pygame.display.set_mode(s.DISPLAY_SIZE, pygame.SCALED | pygame.RESIZABLE)
+        self.display = pygame.display.set_mode(g.DISPLAY_RECT.size, pygame.SCALED | pygame.RESIZABLE)
         self.clock = pygame.time.Clock()
         self.dt = 0
         self.running = True
 
-        s.scene_manager = SceneManager()
-        s.scenes = {
-            "menu": scenes.Menu,
-            "battle": scenes.Battle
-        }
-        s.scene_manager.change_scene(s.scenes["menu"])
+        g.scene_manager = scenes.SceneManager()
+        g.scenes = { "menu": scenes.Menu, "battle": scenes.Battle }
+        g.scene_manager.change_scene(g.scenes["battle"])
 
 
     def handle_events(self):
@@ -40,21 +22,21 @@ class Game():
             if event.type == pygame.QUIT:
                 self.running = False
                 break
-            if hasattr(s.scene_manager.current_scene, "handle_event"):
-                s.scene_manager.current_scene.handle_event(event)
+            if hasattr(g.scene_manager.current_scene, "handle_event"):
+                g.scene_manager.current_scene.handle_event(event)
 
 
     def update(self):
-        if hasattr(s.scene_manager.current_scene, "update"):
-            s.scene_manager.current_scene.update(self.dt)
+        if hasattr(g.scene_manager.current_scene, "update"):
+            g.scene_manager.current_scene.update(self.dt)
 
 
     def draw(self):
         self.display.fill("black")
 
         fblits = []
-        if hasattr(s.scene_manager.current_scene, "draw"):
-            fblits.extend(s.scene_manager.current_scene.draw())
+        if hasattr(g.scene_manager.current_scene, "draw"):
+            fblits.extend(g.scene_manager.current_scene.draw())
         self.display.fblits(fblits)
 
         pygame.display.flip()
@@ -62,11 +44,11 @@ class Game():
 
     def run(self):
         while self.running:
-            s.scene_manager.update()
+            g.scene_manager.update()
             self.handle_events()
             self.update()
             self.draw()
-            self.dt = self.clock.tick(s.FPS) / 1000
+            self.dt = self.clock.tick(g.FPS) / 1000
         
         pygame.quit()
 

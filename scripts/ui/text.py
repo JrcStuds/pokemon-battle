@@ -1,5 +1,5 @@
 import pygame
-import assets.config.settings as s
+import assets.config.globals as g
 
 
 

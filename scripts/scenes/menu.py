@@ -1,10 +1,11 @@
 import pygame
-import assets.config.settings as s
+import assets.config.globals as g
+import scripts.scenes as scenes
 import scripts.ui as ui
 
 
 
-class Menu(ui.SceneBaseClass):
+class Menu(scenes.SceneBaseClass):
     def __init__(self):
         super().__init__()
 
@@ -13,7 +14,13 @@ class Menu(ui.SceneBaseClass):
         self.elements.append(ui.Text((0, 0), f"pokemon battle", "dodgerblue"))
 
         self.elements.append(ui.Button(
-            lambda: s.scene_manager.change_scene(s.scenes["battle"]),
+            lambda: g.scene_manager.change_scene(g.scenes["battle"]),
             pygame.Rect(0, 15, 50, 20),
             "start battle"
         ))
+
+    
+    def handle_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_x:
+                g.scene_manager.change_scene(g.scenes["battle"])

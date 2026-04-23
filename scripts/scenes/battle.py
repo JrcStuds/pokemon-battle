@@ -1,24 +1,37 @@
 import pygame
+import assets.config.globals as g
+import scripts.scenes as scenes
 import scripts.ui as ui
-import assets.config.settings as s
-from scripts.battle.pokemon import Pokemon
-from scripts.battle.battler import Battler
+import scripts.battle as battle
+from scripts.battle.menu_states.general_menu import GeneralBattleMenu
 
 
 
-class Battle(ui.SceneBaseClass):
+class Battle(scenes.SceneBaseClass):
     def __init__(self):
         super().__init__()
+
+        self.menu_stack = []
+        
+
+
 
         self.background = "white"
         self.elements.append(ui.Text((0, 0), "Battle", "dodgerblue"))
         
-        self.player = Battler(0, [ Pokemon("Charmander") ])
-        self.opponent = Battler(1, [ Pokemon("Bulbasaur") ])
+        self.player = battle.Battler(pygame.Rect(0, 20, g.DISPLAY_RECT.width, 20), 0, [ battle.Pokemon("Charmander") ])
+        self.opponent = battle.Battler(pygame.Rect(0, 40, g.DISPLAY_RECT.width, 20), 1, [ battle.Pokemon("Bulbasaur") ])
 
-        self.add_elements(self.player, self.opponent)
+        """self.add_elements(self.player, self.opponent)
         self.add_elements(ui.Button(
-            lambda: s.scene_manager.change_scene(s.scenes["menu"]),
+            lambda: g.scene_manager.change_scene(g.scenes["menu"]),
             pygame.Rect(0, 60, 50, 20),
             "back to menu"
-        ))
+        ))"""
+
+        GeneralBattleMenu(battle=self).enter_state()
+    
+
+    def handle_event(self, event):
+        if len(self.menu_stack):
+            self.menu_stack[-1].handle_event(event)
