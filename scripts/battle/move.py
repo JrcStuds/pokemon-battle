@@ -2,7 +2,8 @@ import json
 
 
 class Move():
-    def __init__(self, name):
+    def __init__(self, pokemon, name):
+        self.pokemon = pokemon
         self.name = name
 
         with open("assets/data/moves.json", "r") as file:
@@ -16,12 +17,4 @@ class Move():
 
 
     def execute(self, user, target):
-        atk_stat = user.attack if self.category == "physical" else user.sp_attack
-        def_stat = target.defense if self.category == "physical" else target.sp_defense
-
-        damage = (((2/5)+2)*self.power*(atk_stat/def_stat))/50+2
-        target.take_damage(damage)
-        print(f"{user.name} used {self.name} on {target.name}")
-        print(f"{target.name}'s hp is now {target.hp}")
-
-        user.battle.swap_attacker()
+        self.pokemon.battle.queue_move(self, target)

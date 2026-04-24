@@ -17,7 +17,7 @@ class Pokemon():
         self.sp_attack = pokemon_db[name]["sp_attack"]
         self.sp_defense = pokemon_db[name]["sp_defense"]
         self.speed = pokemon_db[name]["speed"]
-        self.moveset = [Move(move) for move in pokemon_db[name]["moveset"]]
+        self.moveset = [Move(self, move) for move in pokemon_db[name]["moveset"]]
 
 
     def take_damage(self, damage):

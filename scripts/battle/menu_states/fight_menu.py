@@ -10,31 +10,8 @@ class FightBattleMenu(FourButtonMenuBaseClass):
     def __init__(self, battle):
         super().__init__(battle=battle)
 
-        """self.add_elements(
-            ui.Button(
-                lambda: print("move1"),
-                g.FOUR_BUTTON_RECTS["topleft"],
-                "move1"
-            ),
-            ui.Button(
-                lambda: print("move2"),
-                g.FOUR_BUTTON_RECTS["topright"],
-                "move2"
-            ),
-            ui.Button(
-                lambda: print("move3"),
-                g.FOUR_BUTTON_RECTS["bottomleft"],
-                "move3"
-            ),
-            ui.Button(
-                lambda: print("move4"),
-                g.FOUR_BUTTON_RECTS["bottomright"],
-                "move4"
-            )
-        )"""
-
         for i in range(4):
-            if len(self.battle.player.active_pokemon.moveset) <= i:
+            if len(self.battle.attacker.active_pokemon.moveset) <= i:
                 self.add_elements(ui.Button(
                     callback=lambda i=i: print(f"move{i}"),
                     rect=g.FOUR_BUTTON_RECTS[i]
@@ -42,12 +19,12 @@ class FightBattleMenu(FourButtonMenuBaseClass):
                 continue
                 
             self.add_elements(ui.Button(
-                callback=lambda i=i: self.battle.player.active_pokemon.moveset[i].execute(
-                    user=self.battle.player.active_pokemon,
-                    target=self.battle.opponent.active_pokemon
+                callback=lambda i=i: self.battle.attacker.active_pokemon.moveset[i].execute(
+                    user=self.battle.attacker.active_pokemon,
+                    target=self.battle.defender.active_pokemon
                 ),
                 rect=g.FOUR_BUTTON_RECTS[i],
-                text=self.battle.player.active_pokemon.moveset[i].name
+                text=self.battle.attacker.active_pokemon.moveset[i].name
             ))
 
         self.init_cursor()
