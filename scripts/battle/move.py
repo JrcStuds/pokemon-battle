@@ -21,3 +21,7 @@ class Move():
 
         damage = (((2/5)+2)*self.power*(atk_stat/def_stat))/50+2
         target.take_damage(damage)
+        print(f"{user.name} used {self.name} on {target.name}")
+        print(f"{target.name}'s hp is now {target.hp}")
+
+        user.battle.swap_attacker()

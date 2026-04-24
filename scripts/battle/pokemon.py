@@ -3,8 +3,9 @@ from .move import Move
 
 
 class Pokemon():
-    def __init__(self, name):
+    def __init__(self, battle, name):
         self.name = name
+        self.battle = battle
 
         with open("assets/data/pokemon.json", "r") as file:
             pokemon_db = json.load(file)
