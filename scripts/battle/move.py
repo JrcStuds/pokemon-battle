@@ -16,5 +16,9 @@ class Move():
         self.power = moves_db[name]["power"]
 
 
-    def execute(self, user, target):
-        self.pokemon.battle.queue_move(self, target)
+    def execute(self, target):
+        move = {
+            "move": self,
+            "target": target
+        }
+        self.pokemon.battle.queue_move(move)

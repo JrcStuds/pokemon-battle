@@ -1,4 +1,4 @@
-import pygame
+import pygame, random, json
 import assets.config.globals as g
 import scripts.scenes as scenes
 import scripts.ui as ui
@@ -16,6 +16,9 @@ class Battle(scenes.SceneBaseClass):
 
         self.background = "white"
         self.elements.append(ui.Text((0, 0), "Battle", "dodgerblue"))
+
+        with open("assets/data/type_chart.json", "r") as file:
+            self.type_chart = json.load(file)
         
         self.player = battle.Battler(self, pygame.Rect(0, 20, g.DISPLAY_RECT.width, 20), 0, [ battle.Pokemon(self, "Charmander") ])
         self.opponent = battle.Battler(self, pygame.Rect(0, 40, g.DISPLAY_RECT.width, 20), 1, [ battle.Pokemon(self, "Bulbasaur") ])
@@ -39,15 +42,34 @@ class Battle(scenes.SceneBaseClass):
             self.execute_queued_moves()
 
     
-    def queue_move(self, move, target):
-        self.queued_moves.append([move, target])
+    def queue_move(self, move):
+        self.queued_moves.append(move)
 
 
     def execute_queued_moves(self):
-        self.queued_moves.sort(key=lambda move: move[0].pokemon.speed)
+        self.queued_moves.sort(key=lambda move: move["move"].pokemon.speed)
         for move in self.queued_moves:
-            print(move[0].name)
+            print(f"{move['move'].pokemon.name} used {move['move'].name} on {move['target'].name}")
+            print(f"{move['target'].name}'s HP went from {round(move['target'].hp)}")
+            move["target"].take_damage(self.calculate_damage(move["move"], move["target"]))
+            print(f"to {round(move['target'].hp)}")
 
         self.queued_moves = []
         self.menu_stack = []
         menus.GeneralBattleMenu(self).enter_state()
+
+
+    def calculate_damage(self, move, target):
+        atk_stat = move.pokemon.attack if move.type == "physical" else move.pokemon.sp_attack
+        def_stat = target.defense if move.type == "physical" else target.sp_defense
+
+        critical = random.randint(0, 15) // 15 + 1   # 1/16 chance -> 1 or 2
+        type_mult = self.type_chart[move.type][target.type]   # chart goes [attacking type][defending type]
+        stab = 1.5 if move.type == move.pokemon.type else 1
+        random_mult = random.randint(85, 100) / 100   # uniform random variation (85-100% strength)
+
+        damage = 2 * move.pokemon.level / 5 + 2
+        damage *= move.power * atk_stat / def_stat / 50 + 2
+        damage *= critical * type_mult * stab * random_mult
+
+        return damage

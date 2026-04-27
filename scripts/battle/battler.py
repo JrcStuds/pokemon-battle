@@ -24,6 +24,6 @@ class Battler(scenes.SceneBaseClass):
             raise KeyError(f"pokemon has no moves")
 
         idx = random.randint(0, len(self.active_pokemon.moveset)-1)
-        self.active_pokemon.moveset[idx].execute(user=self.active_pokemon, target=target)
+        self.active_pokemon.moveset[idx].execute(target=target)
 
         return

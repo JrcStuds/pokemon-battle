@@ -10,6 +10,7 @@ class Pokemon():
         with open("assets/data/pokemon.json", "r") as file:
             pokemon_db = json.load(file)
 
+        self.level = 1
         self.type = pokemon_db[name]["type"]
         self.hp = pokemon_db[name]["hp"]
         self.attack = pokemon_db[name]["attack"]
