@@ -17,8 +17,7 @@ class Game():
         self.joysticks = [pygame.joystick.Joystick(x) for x in range(pygame.joystick.get_count())]
 
         g.scene_manager = scenes.SceneManager()
-        g.scenes = { "menu": scenes.Menu, "battle": scenes.Battle }
-        g.scene_manager.change_scene(g.scenes["battle"])
+        g.scene_manager.change_scene(scenes.Menu())
 
 
     def handle_events(self):

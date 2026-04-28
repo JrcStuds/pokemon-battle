@@ -30,8 +30,8 @@ class Battle(scenes.SceneBaseClass):
             rect=g.POKEMON_INFO_RECTS["opponent"],
             pokemon=[ battle.Pokemon(self, "Bulbasaur") ]
         )
-        self.attacker = self.opponent
-        self.defender = self.player
+        self.attacker = self.player
+        self.defender = self.opponent
 
         self.add_elements(self.player, self.opponent)
 
@@ -64,7 +64,11 @@ class Battle(scenes.SceneBaseClass):
             else:
                 self.state = "selecting_move"
                 menus.GeneralBattleMenu(self).enter_state()
-                    
+
+        if round(self.attacker.active_pokemon.hp) <= 0:
+            g.scene_manager.change_scene(scenes.GameEnd(winner=self.opponent.active_pokemon.name))
+        if round(self.opponent.active_pokemon.hp) <= 0:
+            g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
 
     
     def queue_move(self, move):

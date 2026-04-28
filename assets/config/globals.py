@@ -37,4 +37,3 @@ POKEMON_INFO_RECTS = {
 
 
 scene_manager = None
-scenes = {}
