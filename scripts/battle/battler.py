@@ -37,4 +37,5 @@ class Battler(scenes.SceneBaseClass):
 
     def update_text(self):
         self.pokemon_name_text.update_text(self.active_pokemon.name)
-        self.pokemon_hp_text.update_text(str(round(self.active_pokemon.hp)))
+        hp = round(self.active_pokemon.hp) if round(self.active_pokemon.hp) >= 0.5 else 0
+        self.pokemon_hp_text.update_text(str(hp))

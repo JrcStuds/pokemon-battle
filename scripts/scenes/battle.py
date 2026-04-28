@@ -30,8 +30,8 @@ class Battle(scenes.SceneBaseClass):
             rect=g.POKEMON_INFO_RECTS["opponent"],
             pokemon=[ battle.Pokemon(self, "Bulbasaur") ]
         )
-        self.attacker = self.opponent
-        self.defender = self.player
+        self.attacker = self.player
+        self.defender = self.opponent
 
         self.add_elements(self.player, self.opponent)
 
@@ -52,19 +52,24 @@ class Battle(scenes.SceneBaseClass):
             if self.battle_tasks:
                 task = self.battle_tasks.pop(0)
 
-                if task["type"] == "dialogue":
-                    for dialogue in task["dialogues"]:
-                        menus.DialogueMenu(self, dialogue).enter_state()
-                
-                elif task["type"] == "damage":
+                if task["type"] == "damage":
                     task["target"].take_damage(task["damage"])
                     self.player.update_text()
                     self.opponent.update_text()
+
+                elif task["type"] == "dialogue":
+                    for dialogue in task["dialogues"]:
+                        menus.DialogueMenu(self, dialogue).enter_state()
+
+                elif task["type"] == "end_move":
+                    if round(self.attacker.active_pokemon.hp) <= 0:
+                        g.scene_manager.change_scene(scenes.GameEnd(winner=self.opponent.active_pokemon.name))
+                    if round(self.opponent.active_pokemon.hp) <= 0:
+                        g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
             
             else:
                 self.state = "selecting_move"
                 menus.GeneralBattleMenu(self).enter_state()
-                    
 
     
     def queue_move(self, move):
@@ -89,6 +94,7 @@ class Battle(scenes.SceneBaseClass):
 
             self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
             self.battle_tasks.append({"type": "dialogue", "dialogues": dialogues})
+            self.battle_tasks.append({"type": "end_move"})
         
         self.queued_moves = []
         self.state = "processing_moves"

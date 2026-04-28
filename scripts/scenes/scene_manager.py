@@ -16,4 +16,4 @@ class SceneManager():
             self.next_scene = None
 
     def change_scene(self, scene: object):
-        self.next_scene = scene()
+        self.next_scene = scene
