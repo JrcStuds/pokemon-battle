@@ -30,10 +30,5 @@ class FightBattleMenu(FourButtonMenuBaseClass):
     def handle_event(self, event):
         super().handle_event(event)
         
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_z:
-                self.exit_state()
-            
-        if event.type == pygame.JOYBUTTONDOWN:
-            if event.button == 2:
-                self.exit_state()
+        if g.keys["b"]:
+            self.exit_state()

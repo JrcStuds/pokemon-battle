@@ -23,6 +23,5 @@ class GameEnd(scenes.SceneBaseClass):
     
 
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key in g.KEYS["a"] or event.key in g.KEYS["b"]:
-                g.scene_manager.change_scene(scenes.Menu())
+        if g.keys["a"] or g.keys["b"]:
+            g.scene_manager.change_scene(scenes.Menu())

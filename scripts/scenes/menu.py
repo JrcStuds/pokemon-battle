@@ -16,15 +16,10 @@ class Menu(scenes.SceneBaseClass):
         self.elements.append(ui.Button(
             lambda: g.scene_manager.change_scene(scenes.Battle()),
             pygame.Rect(0, 15, 50, 20),
-            "start battle"
+            "start battle (A)"
         ))
 
     
     def handle_event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key in g.KEYS["a"]:
-                g.scene_manager.change_scene(scenes.Battle())
-        
-        if event.type == pygame.JOYBUTTONDOWN:
-            if event.button == 1:
-                g.scene_manager.change_scene(scenes.Battle())
+        if g.keys["a"]:
+            g.scene_manager.change_scene(scenes.Battle())

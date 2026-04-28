@@ -48,7 +48,7 @@ class Battle(scenes.SceneBaseClass):
             self.defender.execute_random_move(self.attacker.active_pokemon)
             self.execute_queued_moves()
 
-        if self.state == "processing_moves" and not self.menu_stack:
+        while self.state == "processing_moves" and not self.menu_stack:
             if self.battle_tasks:
                 task = self.battle_tasks.pop(0)
 
@@ -58,8 +58,7 @@ class Battle(scenes.SceneBaseClass):
                     self.opponent.update_text()
 
                 elif task["type"] == "dialogue":
-                    for dialogue in task["dialogues"]:
-                        menus.DialogueMenu(self, dialogue).enter_state()
+                    menus.DialogueMenu(self, task["text"]).enter_state()
 
                 elif task["type"] == "end_move":
                     if round(self.attacker.active_pokemon.hp) <= 0:
@@ -78,22 +77,18 @@ class Battle(scenes.SceneBaseClass):
 
     def execute_queued_moves(self):
         self.queued_moves.sort(key=lambda move: move["move"].pokemon.speed)
-
         self.menu_stack = []
         self.battle_tasks = []
 
         for move in self.queued_moves:
             damage = self.calculate_damage(move["move"], move["target"])
-
-            dialogues = []
-            match damage["effective"]:
-                case 0.5: dialogues.append("It's not very effective...")
-                case 2: dialogues.append("It's super effective!")
-            if damage["critical"]: dialogues.append("Critical hit!")
-            dialogues.append(f"{move['move'].pokemon.name} used {move['move'].name}")
-
+            
+            self.battle_tasks.append({"type": "dialogue", "text": f"{move['move'].pokemon.name} used {move['move'].name}"})
             self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
-            self.battle_tasks.append({"type": "dialogue", "dialogues": dialogues})
+            if damage["critical"]: self.battle_tasks.append({"type": "dialogue", "text": "Critical hit!"})
+            match damage["effective"]:
+                case 0.5: self.battle_tasks.append({"type": "dialogue", "text": "It's not very effective..."})
+                case 2: self.battle_tasks.append({"type": "dialogue", "text": "It's super effective!"})
             self.battle_tasks.append({"type": "end_move"})
         
         self.queued_moves = []

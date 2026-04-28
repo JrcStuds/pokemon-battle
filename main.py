@@ -30,6 +30,30 @@ class Game():
             if event.type == pygame.JOYDEVICEREMOVED:
                 self.joysticks.remove(event.instance_id)
 
+            g.keys = {
+            "up": False,
+            "down": False,
+            "left": False,
+            "right": False,
+            "a": False,
+            "b": False
+            }
+
+            if event.type == pygame.KEYDOWN:
+                for k in g.CONTROLS.keys():
+                    if event.key in g.CONTROLS[k]: g.keys[k] = True
+            if event.type == pygame.JOYBUTTONDOWN:
+                if event.button == 0: g.keys["a"] = True
+                if event.button == 1: g.keys["b"] = True
+            if event.type == pygame.JOYAXISMOTION:
+                if event.axis == 1:
+                    if event.value <= -0.2: g.keys["up"] = True
+                    if event.value >= 0.2: g.keys["down"] = True
+                if event.axis == 0:
+                    if event.value <= -0.2: g.keys["left"] = True
+                    if event.value >= 0.2: g.keys["right"] = True
+                    
+
             if hasattr(g.scene_manager.current_scene, "handle_event"):
                 g.scene_manager.current_scene.handle_event(event)
 

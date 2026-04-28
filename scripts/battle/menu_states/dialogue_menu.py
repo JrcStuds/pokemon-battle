@@ -20,6 +20,5 @@ class DialogueMenu(BattleMenuSceneBaseClass):
     def handle_event(self, event):
         super().handle_event(event)
 
-        if event.type == pygame.KEYDOWN:
-            if event.key in g.KEYS["a"]:
-                self.exit_state()
+        if g.keys["a"]:
+            self.exit_state()

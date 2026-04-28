@@ -4,12 +4,12 @@ import pygame
 FPS = 60
 DISPLAY_RECT = pygame.Rect(0, 0, 240, 160)
 
-
-KEYS = {
-    "up": [pygame.K_UP, pygame.K_w],
-    "down": [pygame.K_DOWN, pygame.K_s],
-    "left": [pygame.K_LEFT, pygame.K_a],
-    "right": [pygame.K_RIGHT, pygame.K_d],
+keys = {}
+CONTROLS = {
+    "up": [pygame.K_UP, pygame.K_w],         # Joy UP
+    "down": [pygame.K_DOWN, pygame.K_s],     # Joy DOWN
+    "left": [pygame.K_LEFT, pygame.K_a],     # Joy LEFT
+    "right": [pygame.K_RIGHT, pygame.K_d],   # Joy RIGHT
     "a": [pygame.K_x, pygame.K_RETURN],
     "b": [pygame.K_z, pygame.K_RSHIFT],
 }

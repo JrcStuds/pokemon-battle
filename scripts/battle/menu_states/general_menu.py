@@ -38,7 +38,3 @@ class GeneralBattleMenu(FourButtonMenuBaseClass):
 
     def handle_event(self, event):
         super().handle_event(event)
-
-        if event.type == pygame.JOYBUTTONDOWN:
-            if event.button == 2:
-                g.scene_manager.change_scene(g.scenes["menu"])
