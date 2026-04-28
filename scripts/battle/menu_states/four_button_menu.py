@@ -1,7 +1,7 @@
 import pygame
 import assets.config.globals as g
 import scripts.ui as ui
-from .menu_scene import BattleMenuSceneBaseClass
+from .menu_base_scene import BattleMenuSceneBaseClass
 
 
 
@@ -9,7 +9,7 @@ class FourButtonMenuBaseClass(BattleMenuSceneBaseClass):
     def __init__(self, battle):
         super().__init__(battle)
 
-        self.rect = g.FOUR_BUTTON_RECTS["container_rect"]
+        self.rect = g.FOUR_BUTTON_RECTS["container"]
         self.background = "dodgerblue"
 
 

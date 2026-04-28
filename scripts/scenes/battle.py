@@ -13,20 +13,29 @@ class Battle(scenes.SceneBaseClass):
 
         self.menu_stack = []
         self.queued_moves = []
+        self.state = "selecting_move"   # can also be "processing_moves"
 
         self.background = "white"
 
         with open("assets/data/type_chart.json", "r") as file:
             self.type_chart = json.load(file)
         
-        self.player = battle.Battler(self, pygame.Rect(30, 10, 80, 30), [ battle.Pokemon(self, "Charmander") ])
-        self.opponent = battle.Battler(self, pygame.Rect(130, 60, 80, 30), [ battle.Pokemon(self, "Bulbasaur") ])
+        self.player = battle.Battler(
+            battle=self,
+            rect=g.POKEMON_INFO_RECTS["player"],
+            pokemon=[ battle.Pokemon(self, "Charmander") ]
+        )
+        self.opponent = battle.Battler(
+            battle=self,
+            rect=g.POKEMON_INFO_RECTS["opponent"],
+            pokemon=[ battle.Pokemon(self, "Bulbasaur") ]
+        )
         self.attacker = self.opponent
         self.defender = self.player
 
         self.add_elements(self.player, self.opponent)
 
-        menus.GeneralBattleMenu(battle=self).enter_state()
+        menus.GeneralBattleMenu(self).enter_state()
     
 
     def handle_event(self, event):
@@ -37,8 +46,25 @@ class Battle(scenes.SceneBaseClass):
     def update(self, dt):
         if len(self.queued_moves) == 1:
             self.defender.execute_random_move(self.attacker.active_pokemon)
-        if len(self.queued_moves) == 2:
             self.execute_queued_moves()
+
+        if self.state == "processing_moves" and not self.menu_stack:
+            if self.battle_tasks:
+                task = self.battle_tasks.pop(0)
+
+                if task["type"] == "dialogue":
+                    for dialogue in task["dialogues"]:
+                        menus.DialogueMenu(self, dialogue).enter_state()
+                
+                elif task["type"] == "damage":
+                    task["target"].take_damage(task["damage"])
+                    self.player.update_text()
+                    self.opponent.update_text()
+            
+            else:
+                self.state = "selecting_move"
+                menus.GeneralBattleMenu(self).enter_state()
+                    
 
     
     def queue_move(self, move):
@@ -48,19 +74,24 @@ class Battle(scenes.SceneBaseClass):
     def execute_queued_moves(self):
         self.queued_moves.sort(key=lambda move: move["move"].pokemon.speed)
 
+        self.menu_stack = []
+        self.battle_tasks = []
+
         for move in self.queued_moves:
             damage = self.calculate_damage(move["move"], move["target"])
-            print(f"{move['move'].pokemon.name} used {move['move'].name} on {move['target'].name}")
-            print(f"{move['target'].name}'s HP went from {round(move['target'].hp)}")
-            move["target"].take_damage(damage)
-            print(f"to {round(move['target'].hp)}")
 
-        self.player.update_text()
-        self.opponent.update_text()
+            dialogues = []
+            match damage["effective"]:
+                case 0.5: dialogues.append("It's not very effective...")
+                case 2: dialogues.append("It's super effective!")
+            if damage["critical"]: dialogues.append("Critical hit!")
+            dialogues.append(f"{move['move'].pokemon.name} used {move['move'].name}")
 
+            self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
+            self.battle_tasks.append({"type": "dialogue", "dialogues": dialogues})
+        
         self.queued_moves = []
-        self.menu_stack = []
-        menus.GeneralBattleMenu(self).enter_state()
+        self.state = "processing_moves"
 
 
     def calculate_damage(self, move, target):
@@ -76,4 +107,8 @@ class Battle(scenes.SceneBaseClass):
         damage *= move.power * atk_stat / def_stat / 50 + 2
         damage *= critical * type_mult * stab * random_mult
 
-        return damage
+        return {
+            "damage": damage,
+            "critical": bool(critical - 1),
+            "effective": type_mult
+        }

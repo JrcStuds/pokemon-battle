@@ -8,7 +8,7 @@ class Battler(scenes.SceneBaseClass):
     def __init__(self, battle, rect: pygame.Rect, pokemon: list):
         super().__init__(rect=rect)
         self.battle = battle
-
+        self.rect = rect
         self.background = "coral"
 
         self.pokemon = pokemon

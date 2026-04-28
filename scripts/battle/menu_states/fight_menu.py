@@ -1,7 +1,7 @@
 import pygame
 import assets.config.globals as g
 import scripts.ui as ui
-import scripts.battle.menu_states as menus
+import scripts.battle.menu_states as menu_states
 from .four_button_menu import FourButtonMenuBaseClass
 
 
