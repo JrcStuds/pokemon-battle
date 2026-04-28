@@ -40,6 +40,27 @@ class FourButtonMenuBaseClass(BattleMenuSceneBaseClass):
             if event.key in g.KEYS["right"] and self.cursor_idx % 2 == 0:
                 self.cursor_idx += 1
                 self.cursor.pos = self.cursor_elements[self.cursor_idx].rect.center
+
+        if event.type == pygame.JOYAXISMOTION:
+            if event.axis == 1:
+                if event.value < -0.2 and self.cursor_idx >= 2:
+                    self.cursor_idx -= 2
+                    self.cursor.pos = self.cursor_elements[self.cursor_idx].rect.center
+                if event.value > 0.2 and self.cursor_idx <= 1:
+                    self.cursor_idx += 2
+                    self.cursor.pos = self.cursor_elements[self.cursor_idx].rect.center
+            if event.axis == 0:
+                if event.value < -0.2 and self.cursor_idx % 2 == 1:
+                    self.cursor_idx -= 1
+                    self.cursor.pos = self.cursor_elements[self.cursor_idx].rect.center
+                if event.value > 0.2 and self.cursor_idx % 2 == 0:
+                    self.cursor_idx += 1
+                    self.cursor.pos = self.cursor_elements[self.cursor_idx].rect.center
+        
+        if event.type == pygame.JOYBUTTONDOWN:
+            if event.button == 1 and hasattr(self.cursor_elements[self.cursor_idx], "click"):
+                self.cursor_elements[self.cursor_idx].click()
+
         
         for element in self.elements:
             if hasattr(element, "handle_event"):

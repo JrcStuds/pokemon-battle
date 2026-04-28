@@ -24,3 +24,7 @@ class Menu(scenes.SceneBaseClass):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_x:
                 g.scene_manager.change_scene(g.scenes["battle"])
+        
+        if event.type == pygame.JOYBUTTONDOWN:
+            if event.button == 1:
+                g.scene_manager.change_scene(g.scenes["battle"])

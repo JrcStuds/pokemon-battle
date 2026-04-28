@@ -15,13 +15,12 @@ class Battle(scenes.SceneBaseClass):
         self.queued_moves = []
 
         self.background = "white"
-        self.elements.append(ui.Text((0, 0), "Battle", "dodgerblue"))
 
         with open("assets/data/type_chart.json", "r") as file:
             self.type_chart = json.load(file)
         
-        self.player = battle.Battler(self, pygame.Rect(0, 20, g.DISPLAY_RECT.width, 20), 0, [ battle.Pokemon(self, "Charmander") ])
-        self.opponent = battle.Battler(self, pygame.Rect(0, 40, g.DISPLAY_RECT.width, 20), 1, [ battle.Pokemon(self, "Bulbasaur") ])
+        self.player = battle.Battler(self, pygame.Rect(30, 10, 80, 30), [ battle.Pokemon(self, "Charmander") ])
+        self.opponent = battle.Battler(self, pygame.Rect(130, 60, 80, 30), [ battle.Pokemon(self, "Bulbasaur") ])
         self.attacker = self.opponent
         self.defender = self.player
 
@@ -48,11 +47,16 @@ class Battle(scenes.SceneBaseClass):
 
     def execute_queued_moves(self):
         self.queued_moves.sort(key=lambda move: move["move"].pokemon.speed)
+
         for move in self.queued_moves:
+            damage = self.calculate_damage(move["move"], move["target"])
             print(f"{move['move'].pokemon.name} used {move['move'].name} on {move['target'].name}")
             print(f"{move['target'].name}'s HP went from {round(move['target'].hp)}")
-            move["target"].take_damage(self.calculate_damage(move["move"], move["target"]))
+            move["target"].take_damage(damage)
             print(f"to {round(move['target'].hp)}")
+
+        self.player.update_text()
+        self.opponent.update_text()
 
         self.queued_moves = []
         self.menu_stack = []
