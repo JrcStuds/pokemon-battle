@@ -1,7 +1,7 @@
 import pygame
 import assets.config.globals as g
 import scripts.ui as ui
-import scripts.battle.menu_states as menu_states
+import scripts.battle.menu_states as menus
 from .menu_base_scene import BattleMenuSceneBaseClass
 
 
@@ -15,24 +15,24 @@ class GeneralBattleMenu(BattleMenuSceneBaseClass):
 
         self.add_elements(
             ui.Button(
-                lambda: menu_states.FightBattleMenu(battle=self.battle).enter_state(),
+                lambda: menus.FightBattleMenu(self.battle).enter_state(),
                 g.FOUR_BUTTON_RECTS[0],
-                "fight"
+                "Fight"
             ),
             ui.Button(
-                lambda: print("pkmn"),
+                lambda: menus.PokemonBattleMenu(self.battle).enter_state(),
                 g.FOUR_BUTTON_RECTS[1],
-                "pkmn"
+                "PKMN"
             ),
             ui.Button(
                 lambda: print("items"),
                 g.FOUR_BUTTON_RECTS[2],
-                "items"
+                "Items"
             ),
             ui.Button(
                 lambda: print("run"),
                 g.FOUR_BUTTON_RECTS[3],
-                "run"
+                "Run"
             )
         )
         self.cursor = ui.Cursor(self.elements[0:4], "four_button")

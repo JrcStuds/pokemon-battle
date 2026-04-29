@@ -24,7 +24,7 @@ class Battle(scenes.SceneBaseClass):
         self.player = battle.Battler(
             battle=self,
             rect=g.POKEMON_INFO_RECTS["player"],
-            pokemon=["Charmander"]
+            pokemon=["Charmander", "Bulbasaur", "Charmander"]
         )
         self.opponent = battle.Battler(
             battle=self,
@@ -68,14 +68,17 @@ class Battle(scenes.SceneBaseClass):
                         g.scene_manager.change_scene(scenes.GameEnd(winner=self.opponent.active_pokemon.name))
                     if round(self.opponent.active_pokemon.hp) <= 0:
                         g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
+        
+        for menu in self.menu_stack:
+            if hasattr(menu, "update"):
+                menu.update(dt)
 
 
     def draw(self):
         blits = super().draw()   # call draw on all elements
-        if self.menu_stack:   # call draw on the top-most menu
-            top_menu = self.menu_stack[-1]
-            if hasattr(top_menu, "draw"):
-                blits.extend(top_menu.draw())
+        for menu in self.menu_stack:
+            if hasattr(menu, "draw"):
+                blits.extend(menu.draw())
         return blits
 
     
