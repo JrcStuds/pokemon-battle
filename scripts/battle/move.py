@@ -21,4 +21,4 @@ class Move():
             "move": self,
             "target": target
         }
-        self.pokemon.battle.queue_move(move)
+        self.pokemon.battler.battle.queue_move(move)

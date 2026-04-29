@@ -1,6 +1,7 @@
 import pygame, random
 import scripts.scenes as scenes
 import scripts.ui as ui
+from .pokemon import Pokemon
 
 
 
@@ -11,7 +12,7 @@ class Battler(scenes.SceneBaseClass):
         self.rect = rect
         self.background = "coral"
 
-        self.pokemon = pokemon
+        self.pokemon = [Pokemon(self, name) for name in pokemon]
         self.active_pokemon = self.pokemon[0]
 
         self.pokemon_name_text = ui.Text(
@@ -29,13 +30,12 @@ class Battler(scenes.SceneBaseClass):
         if not len(self.active_pokemon.moveset):
             raise KeyError(f"pokemon has no moves")
 
-        idx = random.randint(0, len(self.active_pokemon.moveset)-1)
+        idx = random.randint(0, len(self.active_pokemon.moveset)-1)   # pick random index from moveset
         self.active_pokemon.moveset[idx].execute(target=target)
 
         return
     
 
     def update_text(self):
-        self.pokemon_name_text.update_text(self.active_pokemon.name)
-        hp = round(self.active_pokemon.hp) if round(self.active_pokemon.hp) >= 0.5 else 0
+        hp = round(self.active_pokemon.hp) if round(self.active_pokemon.hp) >= 0.5 else 0   # clamp hp above 0
         self.pokemon_hp_text.update_text(str(hp))

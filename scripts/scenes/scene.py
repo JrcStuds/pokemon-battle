@@ -8,11 +8,13 @@ class SceneBaseClass():
         self.rect = rect
 
         self.background: str = background
-        self.elements: list = []
+        self.elements: list = []   # list of ui elements or other scenes
 
 
     def handle_event(self, event):
-        pass
+        for element in self.elements:
+            if hasattr(element, "handle_event"):
+                element.handle_event(event)
 
                     
     def update(self, dt):
@@ -22,11 +24,14 @@ class SceneBaseClass():
     def draw(self) -> list:
         blits = []
 
+        # create surface based on scene size as background
         if self.background:
             bg_surf = pygame.Surface(self.rect.size)
             bg_surf.fill(self.background)
             blits.append((bg_surf, (self.rect.topleft)))
 
+        # pass down draw function to elements and extend the overall blit list
+        # earlier elements in self.elements will be blitted first -> at the bottom
         for element in self.elements:
             if hasattr(element, "draw"):
                 blits.extend(element.draw())

@@ -11,8 +11,6 @@ class BattleMenuSceneBaseClass(scenes.SceneBaseClass):
 
     def enter_state(self):
         self.battle.menu_stack.append(self)
-        self.battle.elements.append(self)
     
     def exit_state(self):
         self.battle.menu_stack.pop()
-        self.battle.elements.pop(self.battle.elements.index(self))
