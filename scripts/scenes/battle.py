@@ -46,7 +46,7 @@ class Battle(scenes.SceneBaseClass):
 
     def update(self, dt):
         if len(self.queued_moves) == 1:   # when the player has submitted their move, submit the opponent's
-            self.defender.execute_random_move(self.attacker.active_pokemon)
+            self.defender.execute_random_move(target=self.attacker)
             self.execute_queued_moves()
 
         # process tasks one at a time -> if no (not self.menu_stack), all tasks would be actioned at once
@@ -57,17 +57,7 @@ class Battle(scenes.SceneBaseClass):
                 continue
 
             task = self.battle_tasks.pop(0)  # take the first-most task
-            match task["type"]:
-                case "damage":
-                    task["target"].take_damage(task["damage"])
-                    task["target"].battler.update_text()
-                case "dialogue":
-                    menus.DialogueMenu(self, task["text"]).enter_state()
-                case "end_move":   # check for any dead pokemon (damage has been taken)
-                    if round(self.attacker.active_pokemon.hp) <= 0:
-                        g.scene_manager.change_scene(scenes.GameEnd(winner=self.opponent.active_pokemon.name))
-                    if round(self.opponent.active_pokemon.hp) <= 0:
-                        g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
+            self.process_task(task)
         
         for menu in self.menu_stack:
             if hasattr(menu, "update"):
@@ -86,21 +76,41 @@ class Battle(scenes.SceneBaseClass):
         self.queued_moves.append(move)
 
 
+    def sort_queued_moves(self, queued_moves: list) -> list:
+        switches, moves = [], []
+        for move in queued_moves:
+            if move["type"] == "move":
+                moves.append(move)
+            elif move["type"] == "switch":
+                switches.append(move)
+        moves.sort(key=lambda move: move["move"].pokemon.speed)
+        queued_moves = switches
+        queued_moves.extend(moves)
+        return queued_moves
+
+
     def execute_queued_moves(self):
-        self.queued_moves.sort(key=lambda move: move["move"].pokemon.speed)
+        self.queued_moves = self.sort_queued_moves(self.queued_moves)
         self.menu_stack = []
         self.battle_tasks = []
 
         for move in self.queued_moves:
-            damage = self.calculate_damage(move["move"], move["target"])
+            if move["type"] == "move":
+                damage = self.calculate_damage(move["move"], move["target"].active_pokemon)
+                
+                # used move -> damage -> crit -> type matchup
+                self.battle_tasks.append({"type": "dialogue", "text": f"{move['move'].pokemon.name} used {move['move'].name}"})
+                self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
+                if damage["critical"]: self.battle_tasks.append({"type": "dialogue", "text": "Critical hit!"})
+                match damage["effective"]:
+                    case 0.5: self.battle_tasks.append({"type": "dialogue", "text": "It's not very effective..."})
+                    case 2: self.battle_tasks.append({"type": "dialogue", "text": "It's super effective!"})
             
-            # used move -> damage -> crit -> type matchup
-            self.battle_tasks.append({"type": "dialogue", "text": f"{move['move'].pokemon.name} used {move['move'].name}"})
-            self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
-            if damage["critical"]: self.battle_tasks.append({"type": "dialogue", "text": "Critical hit!"})
-            match damage["effective"]:
-                case 0.5: self.battle_tasks.append({"type": "dialogue", "text": "It's not very effective..."})
-                case 2: self.battle_tasks.append({"type": "dialogue", "text": "It's super effective!"})
+            elif move["type"] == "switch":
+                self.battle_tasks.append({"type": "dialogue", "text": f"Come back, {move['battler'].active_pokemon.name}!"})
+                self.battle_tasks.append({"type": "switch", "battler": move["battler"], "pokemon_idx": move["pokemon_idx"]})
+                self.battle_tasks.append({"type": "dialogue", "text": f"Let's go, {move['battler'].pokemon[move['pokemon_idx']].name}!"})
+                
             self.battle_tasks.append({"type": "end_move"})
         
         self.queued_moves = []
@@ -127,3 +137,21 @@ class Battle(scenes.SceneBaseClass):
             "critical": bool(critical - 1),
             "effective": type_mult
         }
+
+
+    def process_task(self, task):
+        match task["type"]:
+            case "damage":
+                task["target"].active_pokemon.take_damage(task["damage"])
+                task["target"].update_text()
+            case "dialogue":
+                menus.DialogueMenu(self, task["text"]).enter_state()
+            case "end_move":   # check for any dead pokemon (damage has been taken)
+                if round(self.attacker.active_pokemon.hp) <= 0:
+                    g.scene_manager.change_scene(scenes.GameEnd(winner=self.opponent.active_pokemon.name))
+                if round(self.opponent.active_pokemon.hp) <= 0:
+                    g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
+            case "switch":
+                print(task)
+                task["battler"].active_pokemon = task["battler"].pokemon[task["pokemon_idx"]]
+                task["battler"].update_text()

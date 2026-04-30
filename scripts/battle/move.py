@@ -18,6 +18,7 @@ class Move():
 
     def execute(self, target):
         move = {
+            "type": "move",
             "move": self,
             "target": target
         }

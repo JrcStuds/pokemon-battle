@@ -32,12 +32,12 @@ class Game():
 
             # reset the keys being pressed this frame
             g.keys = {
-            "up": False,
-            "down": False,
-            "left": False,
-            "right": False,
-            "a": False,
-            "b": False
+                "up": False,
+                "down": False,
+                "left": False,
+                "right": False,
+                "a": False,
+                "b": False
             }
 
             # go through each event that would represent a control
@@ -47,13 +47,19 @@ class Game():
             if event.type == pygame.JOYBUTTONDOWN:
                 if event.button == 0: g.keys["a"] = True
                 if event.button == 1: g.keys["b"] = True
+                print(event.button)
             if event.type == pygame.JOYAXISMOTION:
                 if event.axis == 1:
-                    if event.value <= -0.2: g.keys["up"] = True
-                    if event.value >= 0.2: g.keys["down"] = True
+                    if event.value <= -0.99: g.keys["up"] = True
+                    if event.value >= 0.99: g.keys["down"] = True
                 if event.axis == 0:
-                    if event.value <= -0.2: g.keys["left"] = True
-                    if event.value >= 0.2: g.keys["right"] = True
+                    if event.value <= -0.99: g.keys["left"] = True
+                    if event.value >= 0.99: g.keys["right"] = True
+            if event.type == pygame.JOYHATMOTION:
+                if event.value[1] == 1: g.keys["up"] = True
+                if event.value[1] == -1: g.keys["down"] = True
+                if event.value[0] == -1: g.keys["left"] = True
+                if event.value[0] == 1: g.keys["right"] = True
                     
             # pass down the handle_event function to the current scene
             if hasattr(g.scene_manager.current_scene, "handle_event"):
