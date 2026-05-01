@@ -25,12 +25,12 @@ class GeneralBattleMenu(BattleMenuSceneBaseClass):
                 "PKMN"
             ),
             ui.Button(
-                lambda: print("items"),
+                lambda: menus.DialogueMenu(self.battle, "There's no bag!").enter_state(),
                 g.FOUR_BUTTON_RECTS[2],
                 "Items"
             ),
             ui.Button(
-                lambda: print("run"),
+                lambda: menus.DialogueMenu(self.battle, "Can't run!").enter_state(),
                 g.FOUR_BUTTON_RECTS[3],
                 "Run"
             )

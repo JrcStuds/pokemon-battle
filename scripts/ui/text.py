@@ -4,8 +4,8 @@ import assets.config.globals as g
 
 
 class Text():
-    def __init__(self, pos: tuple, text: str, col: str = "#000000"):
-        self.font = pygame.font.SysFont("arial", 8)
+    def __init__(self, pos: tuple, text: str, col: str = "#000000", size: int = 8):
+        self.font = pygame.font.SysFont("arial", size)
         self.pos = pos
         self.col = col
         self.surface = None

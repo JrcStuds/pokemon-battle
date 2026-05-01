@@ -15,6 +15,8 @@ class Game():
         self.running = True
         self.joysticks = {}
 
+        g.pokemon_spritesheet = pygame.image.load("assets/images/pokemon.png").convert()
+
         g.scene_manager = scenes.SceneManager()
         g.scene_manager.change_scene(scenes.Menu())
 
@@ -47,7 +49,6 @@ class Game():
             if event.type == pygame.JOYBUTTONDOWN:
                 if event.button == 0: g.keys["a"] = True
                 if event.button == 1: g.keys["b"] = True
-                print(event.button)
             if event.type == pygame.JOYAXISMOTION:
                 if event.axis == 1:
                     if event.value <= -0.99: g.keys["up"] = True

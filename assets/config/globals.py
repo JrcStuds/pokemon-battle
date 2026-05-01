@@ -4,6 +4,11 @@ import pygame
 FPS = 60
 DISPLAY_RECT = pygame.Rect(0, 0, 240, 160)
 
+
+scene_manager = None
+pokemon_spritesheet: pygame.Surface = None
+
+
 keys = {}
 CONTROLS = {
     "up": [pygame.K_UP, pygame.K_w],         # Joy UP
@@ -36,4 +41,9 @@ POKEMON_INFO_RECTS = {
 }
 
 
-scene_manager = None
+SPRITESHEET = {
+    "mini": {
+        "bulbasaur": (74, 12),
+        "charmander": (464, 12)
+    }
+}

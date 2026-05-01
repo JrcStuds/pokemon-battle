@@ -22,11 +22,13 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
             if self.battle.attacker.pokemon.index(self.battle.attacker.active_pokemon) == i:
                 j += 1
             if len(self.battle.attacker.pokemon) <= j:
+                callback = lambda: menus.DialogueMenu(self.battle, "Nothing Happened...").enter_state()
                 text = ""
             else:
+                callback = lambda j=j: self.battle.queue_move({"type": "switch", "battler": self.battle.attacker, "pokemon_idx": j})
                 text = self.battle.attacker.pokemon[j].name
             self.add_elements(ui.Button(
-                callback=lambda j=j: self.battle.queue_move({"type": "switch", "battler": self.battle.attacker, "pokemon_idx": j}),
+                callback=callback,
                 rect=pygame.Rect(110, 25*i+5, 100, 20),
                 text=text
             ))

@@ -16,7 +16,7 @@ class FightBattleMenu(BattleMenuSceneBaseClass):
         for i in range(4):
             if len(self.battle.attacker.active_pokemon.moveset) <= i:  # if there aren't enough moves in the moveset
                 self.add_elements(ui.Button(
-                    callback=lambda i=i: print(f"move{i}"),
+                    callback=lambda: None,
                     rect=g.FOUR_BUTTON_RECTS[i]
                 ))   # create blank button
                 continue

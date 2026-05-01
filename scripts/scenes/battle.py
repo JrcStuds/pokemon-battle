@@ -99,7 +99,7 @@ class Battle(scenes.SceneBaseClass):
                 damage = self.calculate_damage(move["move"], move["target"].active_pokemon)
                 
                 # used move -> damage -> crit -> type matchup
-                self.battle_tasks.append({"type": "dialogue", "text": f"{move['move'].pokemon.name} used {move['move'].name}"})
+                self.battle_tasks.append({"type": "dialogue", "text": f"{move['move'].pokemon.name} used {move['move'].name}", "foe": move["move"].pokemon.battler==self.opponent})
                 self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
                 if damage["critical"]: self.battle_tasks.append({"type": "dialogue", "text": "Critical hit!"})
                 match damage["effective"]:
@@ -145,13 +145,15 @@ class Battle(scenes.SceneBaseClass):
                 task["target"].active_pokemon.take_damage(task["damage"])
                 task["target"].update_text()
             case "dialogue":
-                menus.DialogueMenu(self, task["text"]).enter_state()
+                text = task["text"]
+                if "foe" in task.keys():
+                    if task["foe"]: text = "Foe " + text
+                menus.DialogueMenu(self, text).enter_state()
             case "end_move":   # check for any dead pokemon (damage has been taken)
                 if round(self.attacker.active_pokemon.hp) <= 0:
                     g.scene_manager.change_scene(scenes.GameEnd(winner=self.opponent.active_pokemon.name))
                 if round(self.opponent.active_pokemon.hp) <= 0:
                     g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
             case "switch":
-                print(task)
                 task["battler"].active_pokemon = task["battler"].pokemon[task["pokemon_idx"]]
                 task["battler"].update_text()
