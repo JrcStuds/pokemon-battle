@@ -37,13 +37,7 @@ DIALOGUE_RECTS = {
 
 POKEMON_INFO_RECTS = {
     "opponent": pygame.Rect(30, 10, 80, 30),
-    "player": pygame.Rect(130, 60, 80, 30)
-}
-
-
-SPRITESHEET = {
-    "mini": {
-        "bulbasaur": (74, 12),
-        "charmander": (464, 12)
-    }
+    "player": pygame.Rect(130, 60, 80, 30),
+    "sprite_front": (160, 0),
+    "sprite_back": (32, 32)
 }

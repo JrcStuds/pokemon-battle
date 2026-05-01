@@ -19,12 +19,6 @@ class Menu(scenes.SceneBaseClass):
             "start battle (A)"
         ))
 
-        self.elements.append(ui.Image(
-            pos=(50, 50),
-            type="mini",
-            name="charmander"
-        ))
-
     
     def handle_event(self, event):
         if g.keys["a"]:

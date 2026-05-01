@@ -14,7 +14,7 @@ class Game():
         self.dt = 0
         self.running = True
         self.joysticks = {}
-
+        
         g.pokemon_spritesheet = pygame.image.load("assets/images/pokemon.png").convert()
 
         g.scene_manager = scenes.SceneManager()
