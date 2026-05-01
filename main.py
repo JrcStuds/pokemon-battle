@@ -1,4 +1,4 @@
-import pygame
+import pygame, json
 import assets.config.globals as g
 import scripts.scenes as scenes
 
@@ -16,6 +16,7 @@ class Game():
         self.joysticks = {}
         
         g.pokemon_spritesheet = pygame.image.load("assets/images/pokemon.png").convert()
+        g.text_spritesheet = pygame.image.load("assets/images/text.png").convert()
 
         g.scene_manager = scenes.SceneManager()
         g.scene_manager.change_scene(scenes.Menu())

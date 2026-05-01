@@ -7,6 +7,7 @@ DISPLAY_RECT = pygame.Rect(0, 0, 240, 160)
 
 scene_manager = None
 pokemon_spritesheet: pygame.Surface = None
+text_spritesheet: pygame.Surface = None
 
 
 keys = {}

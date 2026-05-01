@@ -11,13 +11,17 @@ class Menu(scenes.SceneBaseClass):
 
         self.background = "white"
 
-        self.elements.append(ui.Text((0, 0), f"pokemon battle", "dodgerblue"))
-
-        self.elements.append(ui.Button(
-            lambda: g.scene_manager.change_scene(scenes.Battle()),
-            pygame.Rect(0, 15, 50, 20),
-            "start battle (A)"
-        ))
+        self.add_elements(
+            ui.Text(
+                (0, 0),
+                "Pokemon Battle"
+            ),
+            ui.Button(
+                lambda: g.scene_manager.change_scene(scenes.Battle()),
+                pygame.Rect(0, 15, 50, 20),
+                "Start Battle (A)"
+            )
+        )
 
     
     def handle_event(self, event):
