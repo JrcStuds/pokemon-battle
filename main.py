@@ -16,7 +16,7 @@ class Game():
         self.joysticks = {}
         
         g.pokemon_spritesheet = pygame.image.load("assets/images/pokemon.png").convert()
-        g.text_spritesheet = pygame.image.load("assets/images/text.png").convert()
+        g.text_spritesheet = pygame.image.load("assets/images/text.png").convert_alpha()
 
         g.scene_manager = scenes.SceneManager()
         g.scene_manager.change_scene(scenes.Menu())

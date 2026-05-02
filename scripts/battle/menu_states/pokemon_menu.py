@@ -37,7 +37,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
         self.cursor = ui.Cursor(self.elements[0:6], "pokemon_menu")
         self.add_elements(self.cursor)
 
-        self.header = ui.Text((5, 5), "POKEMON MENU")
+        self.header = ui.Text((5, 5), "POKEMON MENU", "regular")
         self.add_elements(self.header)
     
 

@@ -13,11 +13,13 @@ class GameEnd(scenes.SceneBaseClass):
         self.add_elements(
             ui.Text(
                 pos=(5, 5),
-                text=f"{winner} wins!"
+                text=f"{winner} wins!",
+                type="regular"
             ),
             ui.Text(
                 pos=(5, 20),
-                text="Press A to go back to the main menu"
+                text="Press A to go back to the main menu",
+                type="regular"
             )
         )
     

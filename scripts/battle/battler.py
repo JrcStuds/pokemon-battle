@@ -24,11 +24,13 @@ class Battler(scenes.SceneBaseClass):
         )
         self.pokemon_name_text = ui.Text(
             pos=self.rect.move(5, 5).topleft,
-            text=self.active_pokemon.name
+            text=self.active_pokemon.name,
+            type="small"
         )
         self.pokemon_hp_text = ui.Text(
             pos=self.rect.move(5, 15).topleft,
-            text=str(self.active_pokemon.hp)
+            text=str(self.active_pokemon.hp),
+            type="small"
         )
         self.add_elements(self.pokemon_sprite, self.pokemon_name_text, self.pokemon_hp_text)
 

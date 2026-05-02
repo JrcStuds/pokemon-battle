@@ -15,7 +15,7 @@ class DialogueMenu(BattleMenuSceneBaseClass):
         if "empty" in args:
             self.background = None
 
-        self.text = ui.Text(pos=self.rect.move(5, 5).topleft, text=text)
+        self.text = ui.Text(pos=self.rect.move(5, 5).topleft, text=text, type="regular")
         self.add_elements(self.text)
     
 
