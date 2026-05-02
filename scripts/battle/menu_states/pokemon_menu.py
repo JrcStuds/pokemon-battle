@@ -8,9 +8,7 @@ from .menu_base_scene import BattleMenuSceneBaseClass
 
 class PokemonBattleMenu(BattleMenuSceneBaseClass):
     def __init__(self, battle):
-        super().__init__(battle=battle)
-
-        self.background = "white"
+        super().__init__(battle=battle, background="white")
 
         self.add_elements(ui.Button(
             callback=lambda: menus.DialogueMenu(self.battle, "Nothing Happened...").enter_state(),
@@ -37,7 +35,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
         self.cursor = ui.Cursor(self.elements[0:6], "pokemon_menu")
         self.add_elements(self.cursor)
 
-        self.header = ui.Text((5, 5), "POKEMON MENU", "regular")
+        self.header = ui.Text((5, 5), "POKEMON MENU")
         self.add_elements(self.header)
     
 

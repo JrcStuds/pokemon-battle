@@ -4,10 +4,11 @@ import assets.config.globals as g
 
 
 class Text():
-    def __init__(self, pos: tuple, text: str, type: str):
+    def __init__(self, pos: tuple, text: str, type: str = "regular", col: str = "dark"):
         self.pos = pos
         self.surface = None
         self.type = type   # regular or small
+        self.col = col   # dark, light, dark_alt, or light_alt
         self.update_text(text)
 
 
@@ -29,9 +30,13 @@ class Text():
 
         pointer = 0
         for char in text_rects:
-            char_surface = g.text_spritesheet.subsurface(char)
+            char_surface = g.spritesheets["text"].subsurface(char)
             surface.blit(char_surface, (pointer, 0))
             pointer += char[2]
+
+        with pygame.PixelArray(surface) as pixels:
+            pixels.replace(g.TEXT_COLOUR_PALETTES["dark"][0], g.TEXT_COLOUR_PALETTES[self.col][0])
+            pixels.replace(g.TEXT_COLOUR_PALETTES["dark"][1], g.TEXT_COLOUR_PALETTES[self.col][1])
 
         return surface
     

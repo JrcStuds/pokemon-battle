@@ -6,8 +6,11 @@ DISPLAY_RECT = pygame.Rect(0, 0, 240, 160)
 
 
 scene_manager = None
-pokemon_spritesheet: pygame.Surface = None
-text_spritesheet: pygame.Surface = None
+spritesheets = {
+    "pokemon": None,
+    "text": None,
+    "menus": None
+}
 
 
 keys = {}
@@ -21,13 +24,13 @@ CONTROLS = {
 }
 
 
-FOUR_BUTTON_RECTS = {
+GENERAL_MENU_BUTTON_RECTS = {
     "margin": 10,
     "container": pygame.Rect(128, 96, 112, 64),
-    0: pygame.Rect(133, 101, 46, 22),
-    1: pygame.Rect(189, 101, 46, 22),
-    2: pygame.Rect(133, 133, 46, 22),
-    3: pygame.Rect(189, 133, 46, 22),
+    0: pygame.Rect(129, 124, 0, 0),
+    1: pygame.Rect(185, 124, 0, 0),
+    2: pygame.Rect(129, 140, 0, 0),
+    3: pygame.Rect(185, 140, 0, 0),
 }
 
 
@@ -36,9 +39,26 @@ DIALOGUE_RECTS = {
 }
 
 
-POKEMON_INFO_RECTS = {
-    "opponent": pygame.Rect(30, 10, 80, 30),
-    "player": pygame.Rect(130, 60, 80, 30),
-    "sprite_front": (160, 0),
-    "sprite_back": (32, 32)
+BATTLER_RECTS = {
+    "attacker": {
+        "info": (126, 74),
+        "sprite": (40, 64),
+        "name": (142, 76)
+    },
+    "defender": {
+        "info": (13, 16),
+        "sprite": (144, 24),
+        "name": (20, 18)
+    }
+}
+
+
+BACKGROUND_SPRITESHEET_RECT = pygame.Rect(249, 6, 240, 112)
+
+
+TEXT_COLOUR_PALETTES = {
+    "dark": [(96, 96, 96), (208, 208, 200)],
+    "light": [(248, 248, 248), (96, 96, 96)],
+    "dark_alt": [(64, 64, 64), (216, 208, 176)],
+    "light_alt": [(248, 248, 248), (104, 88, 112)]
 }

@@ -5,8 +5,7 @@ import assets.config.globals as g
 
 class Cursor():
     def __init__(self, buttons: list, type: str, visible: bool = True):
-        self.surface = pygame.Surface((2, 2))
-        self.surface.fill("red")
+        self.surface = pygame.image.load("assets/images/menus.png").convert_alpha().subsurface(pygame.Rect(269, 4, 6, 10))
         self.visible = visible
 
         self.cursor_elements = {}   # assign value to each button provided
@@ -14,7 +13,7 @@ class Cursor():
             self.cursor_elements[i] = button
         self.idx = 0
         self.last_idx = 0
-        self.pos = self.cursor_elements[self.idx].rect.center
+        self.pos = self.pos = self.cursor_elements[self.idx].rect.midleft
 
         self.handle_event = None   # cursor HAS a movement behaviour (composition)
         match type:

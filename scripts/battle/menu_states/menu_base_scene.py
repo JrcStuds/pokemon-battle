@@ -6,7 +6,7 @@ import scripts.scenes as scenes
 
 class BattleMenuSceneBaseClass(scenes.SceneBaseClass):
     def __init__(self, battle, rect = g.DISPLAY_RECT, background = None):
-        super().__init__(rect, background)
+        super().__init__(rect=rect, background=background)
         self.battle = battle
 
     def enter_state(self):

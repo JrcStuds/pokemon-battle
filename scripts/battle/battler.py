@@ -7,32 +7,32 @@ from .pokemon import Pokemon
 
 
 class Battler(scenes.SceneBaseClass):
-    def __init__(self, battle, rect: pygame.Rect, pokemon: list):
-        super().__init__(rect=rect)
+    def __init__(self, battle, pokemon: list, attacker: bool):
+        super().__init__()
         self.battle = battle
-        self.rect = rect
-        self.background = "coral"
 
         self.pokemon = [Pokemon(self, name) for name in pokemon]
         self.active_pokemon = self.pokemon[0]
+        self.position = "attacker" if attacker else "defender"
 
-        self.sprite_type = "front" if self.rect == g.POKEMON_INFO_RECTS["opponent"] else "back"
-        self.pokemon_sprite = ui.Image(
-            pos=g.POKEMON_INFO_RECTS["sprite_"+self.sprite_type],
-            type=self.sprite_type,
+        self.sprite = ui.Image(
+            pos=g.BATTLER_RECTS[self.position]["sprite"],
+            spritesheet="pokemon",
+            type="back" if self.position == "attacker" else "front",
             name=self.active_pokemon.name
         )
-        self.pokemon_name_text = ui.Text(
-            pos=self.rect.move(5, 5).topleft,
+        self.info = ui.Image(
+            pos=g.BATTLER_RECTS[self.position]["info"],
+            spritesheet="menus",
+            name=f"{self.position}_info"
+        )
+        self.name = ui.Text(
+            pos=g.BATTLER_RECTS[self.position]["name"],
             text=self.active_pokemon.name,
-            type="small"
+            type="small",
+            col="dark_alt"
         )
-        self.pokemon_hp_text = ui.Text(
-            pos=self.rect.move(5, 15).topleft,
-            text=str(self.active_pokemon.hp),
-            type="small"
-        )
-        self.add_elements(self.pokemon_sprite, self.pokemon_name_text, self.pokemon_hp_text)
+        self.add_elements(self.sprite, self.info, self.name)
 
     
     def execute_random_move(self, target):
@@ -53,6 +53,7 @@ class Battler(scenes.SceneBaseClass):
         self.elements.remove(self.pokemon_sprite)
         self.pokemon_sprite = ui.Image(
             pos=g.POKEMON_INFO_RECTS["sprite_"+self.sprite_type],
+            spritesheet="pokemon",
             type=self.sprite_type,
             name=self.active_pokemon.name
         )

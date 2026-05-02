@@ -8,14 +8,12 @@ import scripts.battle.menu_states as menus
 
 
 class Battle(scenes.SceneBaseClass):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, background = "white"):
+        super().__init__(background=pygame.image.load("assets/images/backgrounds.png").convert_alpha().subsurface(g.BACKGROUND_SPRITESHEET_RECT))
 
         self.menu_stack = []   # menus are layered over one another, top-most is rendered
         self.queued_moves = []   # moves from the player/opponent (from their active pokemon)
         self.state = "selecting_move"   # can also be "processing_moves"
-
-        self.background = "white"
 
         with open("assets/data/type_chart.json", "r") as file:   # load type chart
             self.type_chart = json.load(file)
@@ -23,13 +21,13 @@ class Battle(scenes.SceneBaseClass):
         # create battlers
         self.player = battle.Battler(
             battle=self,
-            rect=g.POKEMON_INFO_RECTS["player"],
-            pokemon=["Charmander", "Bulbasaur", "Charmander"]
+            pokemon=["Charmander", "Bulbasaur", "Charmander"],
+            attacker=True
         )
         self.opponent = battle.Battler(
             battle=self,
-            rect=g.POKEMON_INFO_RECTS["opponent"],
-            pokemon=["Bulbasaur"]
+            pokemon=["Bulbasaur"],
+            attacker=False
         )
         self.attacker = self.player
         self.defender = self.opponent

@@ -6,9 +6,8 @@ import scripts.ui as ui
 
 
 class GameEnd(scenes.SceneBaseClass):
-    def __init__(self, winner: str):
-        super().__init__()
-        self.background = "white"
+    def __init__(self, winner: str, background = "white"):
+        super().__init__(background=background)
 
         self.add_elements(
             ui.Text(

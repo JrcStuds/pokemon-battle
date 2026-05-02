@@ -8,14 +8,12 @@ from .menu_base_scene import BattleMenuSceneBaseClass
 
 class DialogueMenu(BattleMenuSceneBaseClass):
     def __init__(self, battle, text, *args):
-        super().__init__(battle)
+        super().__init__(battle=battle, rect=g.DIALOGUE_RECTS["container"], background="lightpink")
 
-        self.rect = g.DIALOGUE_RECTS["container"]
-        self.background = "lightpink"
         if "empty" in args:
-            self.background = None
+            self.bg_surf = None
 
-        self.text = ui.Text(pos=self.rect.move(5, 5).topleft, text=text, type="regular")
+        self.text = ui.Text(pos=self.rect.move(5, 5).topleft, text=text)
         self.add_elements(self.text)
     
 

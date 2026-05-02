@@ -1,0 +1,14 @@
+{
+    "mini": {
+        "bulbasaur": [74, 12, 32, 32],
+        "charmander": [464, 12, 32, 32]
+    },
+    "front": {
+        "bulbasaur": [11, 46, 64, 64],
+        "charmander": [401, 46, 64, 64]
+    },
+    "back": {
+        "bulbasaur": [11, 111, 64, 64],
+        "charmander": [401, 111, 64, 64]
+    }
+}

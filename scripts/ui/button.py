@@ -5,10 +5,10 @@ from .text import Text
 
 
 class Button():
-    def __init__(self, callback, rect: pygame.Rect, text: str = None, type: str = "regular"):
+    def __init__(self, callback, rect: pygame.Rect, text: str = None, type: str = "regular", col: str = "dark"):
         self.callback = callback
         self.rect = rect
-        self.text = Text(self.rect.topleft, text, type)
+        self.text = Text(self.rect.topleft, text, type, col)
 
 
     def draw(self) -> list:

@@ -4,11 +4,11 @@ import assets.config.globals as g
 
 
 class Image():
-    def __init__(self, pos: tuple, type: str, name: str):
+    def __init__(self, pos: tuple, spritesheet: str, name: str, type: str = None):
         self.pos = pos
         self.type = type
         self.name = name.lower()
-        self.surface = self.init_surface_from_spritesheet()
+        self.surface = self.init_surface_from_spritesheet(spritesheet)
 
 
     def draw(self) -> list:
@@ -16,13 +16,9 @@ class Image():
         return blit
 
     
-    def init_surface_from_spritesheet(self):
-        with open("assets/data/spritesheet.json", "r") as file:
+    def init_surface_from_spritesheet(self, spritesheet):
+        with open(f"assets/data/{spritesheet}_spritesheet.json", "r") as file:
             spritesheet_db = json.load(file)
-        size = spritesheet_db[self.type]["size"]
-        sprite = spritesheet_db[self.type][self.name]
-        
-        surface = g.pokemon_spritesheet.subsurface(pygame.Rect(sprite[0], sprite[1], size, size))
-        surface.set_colorkey(sprite[2])
-
+        sprite = spritesheet_db[self.type][self.name] if self.type else spritesheet_db[self.name]
+        surface = g.spritesheets[spritesheet].subsurface(sprite)
         return surface
