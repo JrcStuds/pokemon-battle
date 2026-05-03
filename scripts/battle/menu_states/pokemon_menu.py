@@ -7,9 +7,10 @@ from .menu_base_scene import BattleMenuSceneBaseClass
 
 
 class PokemonBattleMenu(BattleMenuSceneBaseClass):
-    def __init__(self, battle):
+    def __init__(self, battle, mandatory: bool = False):
         super().__init__(battle=battle, background=ui.image.create_surface_from_spritesheet("menus", "pokemon_bg"))
 
+        self.mandatory = mandatory
         self.buttons = []
 
         self.buttons.append(ui.ImageButton(
@@ -58,11 +59,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                 continue
 
             self.buttons.append(ui.ImageButton(
-                callback=lambda i=i: self.battle.queue_move({
-                    "type": "switch",
-                    "battler": self.battle.attacker,
-                    "pokemon_idx": i
-                }),
+                callback=lambda i=i: self.battle.attacker.pokemon[i].switch(),
                 pos=g.BATTLE_MENU_RECTS["pokemon"][j]["container"],
                 selected=False,
                 image_selected=ui.image.create_surface_from_spritesheet("menus", "pokemon_long_selected"),
@@ -110,7 +107,10 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
         super().handle_event(event)
 
         if g.keys["b"]:
-            self.exit_state()
+            if self.mandatory:
+                menus.DialogueMenu(self.battle, "You need to choose a Pokemon.").enter_state()
+            else:
+                self.exit_state()
 
     
     def update(self, dt):

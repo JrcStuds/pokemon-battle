@@ -10,7 +10,8 @@ spritesheets = {
     "pokemon": None,
     "text": None,
     "menus": None,
-    "backgrounds": None
+    "backgrounds": None,
+    "intro": None
 }
 
 

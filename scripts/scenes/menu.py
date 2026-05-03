@@ -6,17 +6,21 @@ import scripts.ui as ui
 
 
 class Menu(scenes.SceneBaseClass):
-    def __init__(self, background = "white"):
-        super().__init__(background=background)
+    def __init__(self):
+        super().__init__(background=ui.image.create_surface_from_spritesheet("intro", "tall_grass"))
 
         self.add_elements(
             ui.Text(
-                pos=(0, 0),
-                text="Pokemon Battle"
+                pos=(120, 90),
+                text="Pokemon Battle",
+                alignment="center",
+                col="light_alt"
             ),
             ui.Text(
-                pos=(0, 15),
-                text="Start Battle (A)"
+                pos=(120, 105),
+                text="Start Battle (A)",
+                alignment="center",
+                col="light_alt"
             )
         )
 

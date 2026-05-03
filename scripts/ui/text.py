@@ -14,6 +14,8 @@ class Text():
         self.alignment = alignment
         if self.alignment == "right":
             self.pos = (self.pos[0]-self.surface.get_width(), self.pos[1])
+        if self.alignment == "center":
+            self.pos = (self.pos[0]-(self.surface.get_width()/2), self.pos[1])
 
     def draw(self) -> list:
         blit = [(self.surface, self.pos)]

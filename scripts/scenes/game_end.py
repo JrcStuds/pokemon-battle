@@ -6,13 +6,13 @@ import scripts.ui as ui
 
 
 class GameEnd(scenes.SceneBaseClass):
-    def __init__(self, winner: str, background = "white"):
+    def __init__(self, win: bool, background = "white"):
         super().__init__(background=background)
 
         self.add_elements(
             ui.Text(
                 pos=(5, 5),
-                text=f"{winner} wins!",
+                text=f"You {'Win' if win else 'Lose'}!",
                 type="regular"
             ),
             ui.Text(

@@ -13,7 +13,7 @@ class Battle(scenes.SceneBaseClass):
 
         self.menu_stack = []   # menus are layered over one another, top-most is rendered
         self.queued_moves = []   # moves from the player/opponent (from their active pokemon)
-        self.state = "selecting_move"   # can also be "processing_moves"
+        self.state = "selecting_move"   # selecting_move, processing_moves, ending turn
 
         with open("assets/data/type_chart.json", "r") as file:   # load type chart
             self.type_chart = json.load(file)
@@ -44,7 +44,8 @@ class Battle(scenes.SceneBaseClass):
 
     def update(self, dt):
         if len(self.queued_moves) == 1:   # when the player has submitted their move, submit the opponent's
-            self.defender.execute_random_move(target=self.attacker)
+            if self.state == "selecting_move":
+                self.defender.execute_random_move(target=self.attacker)
             self.execute_queued_moves()
 
         # process tasks one at a time -> if no (not self.menu_stack), all tasks would be actioned at once
@@ -149,9 +150,14 @@ class Battle(scenes.SceneBaseClass):
                 menus.DialogueMenu(self, text).enter_state()
             case "end_move":   # check for any dead pokemon (damage has been taken)
                 if round(self.attacker.active_pokemon.hp) <= 0:
-                    g.scene_manager.change_scene(scenes.GameEnd(winner=self.opponent.active_pokemon.name))
+                    for i in range(len(self.attacker.pokemon)):
+                        if self.attacker.pokemon[i].hp > 0: break
+                        if i == len(self.attacker.pokemon)-1:
+                            g.scene_manager.change_scene(scenes.GameEnd(win=False))
+                    menus.PokemonBattleMenu(self, True).enter_state()
+                    self.state = "ending_turn"
                 if round(self.opponent.active_pokemon.hp) <= 0:
-                    g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
+                    g.scene_manager.change_scene(scenes.GameEnd(win=True))
             case "switch":
                 task["battler"].active_pokemon = task["battler"].pokemon[task["pokemon_idx"]]
                 task["battler"].update_info()

@@ -19,7 +19,8 @@ class Game():
             "pokemon": pygame.image.load("assets/images/pokemon.png").convert_alpha(),
             "text": pygame.image.load("assets/images/text.png").convert_alpha(),
             "menus": pygame.image.load("assets/images/menus.png").convert_alpha(),
-            "backgrounds": pygame.image.load("assets/images/backgrounds.png").convert_alpha()
+            "backgrounds": pygame.image.load("assets/images/backgrounds.png").convert_alpha(),
+            "intro": pygame.image.load("assets/images/intro.png").convert_alpha()
         }
 
         g.scene_manager = scenes.SceneManager()

@@ -1,4 +1,5 @@
 import json
+import scripts.battle.menu_states as menus
 from .move import Move
 
 
@@ -24,4 +25,18 @@ class Pokemon():
 
     def take_damage(self, damage):
         self.hp -= damage
+        if self.hp <= 0.5 and self.hp != 0:
+            self.hp = 0
         return
+    
+
+    def switch(self):
+        if self.hp == 0:
+            menus.DialogueMenu(self.battler.battle, "No HP left!").enter_state()
+            return
+        
+        self.battler.battle.queue_move({
+            "type": "switch",
+            "battler": self.battler,
+            "pokemon_idx": self.battler.pokemon.index(self)
+        })
