@@ -45,16 +45,14 @@ class Battler(scenes.SceneBaseClass):
         return
     
 
-    def update_text(self):
-        hp = round(self.active_pokemon.hp) if round(self.active_pokemon.hp) >= 0.5 else 0   # clamp hp above 0
-        self.pokemon_hp_text.update_text(str(hp))
-        self.pokemon_name_text.update_text(self.active_pokemon.name)
+    def update_info(self):
+        self.name.update_text(self.active_pokemon.name)
 
-        self.elements.remove(self.pokemon_sprite)
-        self.pokemon_sprite = ui.Image(
-            pos=g.POKEMON_INFO_RECTS["sprite_"+self.sprite_type],
+        self.elements.remove(self.sprite)
+        self.sprite = ui.Image(
+            pos=g.BATTLER_RECTS[self.position]["sprite"],
             spritesheet="pokemon",
-            type=self.sprite_type,
+            type="back" if self.position == "attacker" else "front",
             name=self.active_pokemon.name
         )
-        self.add_elements(self.pokemon_sprite)
+        self.add_elements(self.sprite)

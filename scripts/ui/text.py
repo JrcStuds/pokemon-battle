@@ -21,7 +21,7 @@ class Text():
         if not text:
             return pygame.Surface((0, 0))
 
-        with open("assets/data/text_spritesheet.json", "r") as file:
+        with open("assets/data/spritesheets/text.json", "r") as file:
             db = json.load(file)
         text_rects = [db[self.type][char] for char in text]
         surface_width = 0
@@ -34,12 +34,17 @@ class Text():
             surface.blit(char_surface, (pointer, 0))
             pointer += char[2]
 
-        with pygame.PixelArray(surface) as pixels:
-            pixels.replace(g.TEXT_COLOUR_PALETTES["dark"][0], g.TEXT_COLOUR_PALETTES[self.col][0])
-            pixels.replace(g.TEXT_COLOUR_PALETTES["dark"][1], g.TEXT_COLOUR_PALETTES[self.col][1])
+        self.palette_swap(surface=surface, end_palette=self.col)
 
         return surface
     
 
     def update_text(self, text: str):
         self.surface = self.render_text(text)
+
+
+    def palette_swap(self, surface: pygame.Surface, end_palette: str, start_palette: str = "dark"):
+        with pygame.PixelArray(surface) as pixels:
+            pixels.replace(g.TEXT_COLOUR_PALETTES[start_palette][0], g.TEXT_COLOUR_PALETTES[end_palette][0])
+            pixels.replace(g.TEXT_COLOUR_PALETTES[start_palette][1], g.TEXT_COLOUR_PALETTES[end_palette][1])
+        return

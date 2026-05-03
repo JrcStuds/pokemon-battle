@@ -9,7 +9,8 @@ scene_manager = None
 spritesheets = {
     "pokemon": None,
     "text": None,
-    "menus": None
+    "menus": None,
+    "backgrounds": None
 }
 
 
@@ -24,13 +25,55 @@ CONTROLS = {
 }
 
 
-GENERAL_MENU_BUTTON_RECTS = {
-    "margin": 10,
-    "container": pygame.Rect(128, 96, 112, 64),
-    0: pygame.Rect(129, 124, 0, 0),
-    1: pygame.Rect(185, 124, 0, 0),
-    2: pygame.Rect(129, 140, 0, 0),
-    3: pygame.Rect(185, 140, 0, 0),
+BATTLE_MENU_RECTS = {
+    "general": {
+        "backing": (0, 112),
+        "menu": (120, 112),
+        "text": [(10, 122), (10, 138)],
+        0: (129, 124),
+        1: (185, 124),
+        2: (129, 140),
+        3: (185, 140),
+    },
+    "fight": {
+        "menu": (0, 112),
+        0: [pygame.Rect(16, 120, 0, 0), (9, 122)],
+        1: [pygame.Rect(88, 120, 0, 0), (81, 122)],
+        2: [pygame.Rect(16, 136, 0, 0), (8, 138)],
+        3: [pygame.Rect(88, 136, 0, 0), (81, 138)],
+    },
+    "pokemon": {
+        0: {
+            "container": (2, 18),
+            "image": (0, 24),
+            "name": (32, 35)
+        },
+        1: {
+            "container": (88, 9),
+            "image": (82, 2),
+            "name": (116, 12),
+        },
+        2: {
+            "container": (88, 33),
+            "image": (82, 26),
+            "name": (116, 36),
+        },
+        3: {
+            "container": (88, 57),
+            "image": (82, 50),
+            "name": (116, 60),
+        },
+        4: {
+            "container": (88, 81),
+            "image": (82, 74),
+            "name": (116, 84),
+        },
+        5: {
+            "container": (88, 105),
+            "image": (82, 98),
+            "name": (116, 108),
+        }
+    }
 }
 
 

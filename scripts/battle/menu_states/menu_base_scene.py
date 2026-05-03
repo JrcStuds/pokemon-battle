@@ -14,10 +14,3 @@ class BattleMenuSceneBaseClass(scenes.SceneBaseClass):
     
     def exit_state(self):
         self.battle.menu_stack.pop()
-
-    def update(self, dt):
-        if hasattr(self, "cursor"):
-            if self.battle.menu_stack[-1] == self:
-                self.cursor.visible = True
-            else:
-                self.cursor.visible = False

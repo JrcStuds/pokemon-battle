@@ -8,35 +8,76 @@ from .menu_base_scene import BattleMenuSceneBaseClass
 
 class PokemonBattleMenu(BattleMenuSceneBaseClass):
     def __init__(self, battle):
-        super().__init__(battle=battle, background="white")
+        super().__init__(battle=battle, background=ui.image.create_surface_from_spritesheet("menus", "pokemon_bg"))
 
-        self.add_elements(ui.Button(
-            callback=lambda: menus.DialogueMenu(self.battle, "Nothing Happened...").enter_state(),
-            rect=pygame.Rect(5, 20, 100, 20),
-            text=self.battle.attacker.active_pokemon.name
+        self.buttons = []
+
+        self.buttons.append(ui.ImageButton(
+            callback=lambda: menus.DialogueMenu(battle=self.battle, text="Nothing happened..."),
+            pos=g.BATTLE_MENU_RECTS["pokemon"][0]["container"],
+            selected=True,
+            image_selected=ui.image.create_surface_from_spritesheet("menus", "pokemon_active_selected"),
+            image_unselected=ui.image.create_surface_from_spritesheet("menus", "pokemon_active")
         ))
-        i, j = 0, 0
-        while i <= 4:
-            if self.battle.attacker.pokemon.index(self.battle.attacker.active_pokemon) == i:
-                j += 1
-            if len(self.battle.attacker.pokemon) <= j:
-                callback = lambda: menus.DialogueMenu(self.battle, "Nothing Happened...").enter_state()
-                text = ""
-            else:
-                callback = lambda j=j: self.battle.queue_move({"type": "switch", "battler": self.battle.attacker, "pokemon_idx": j})
-                text = self.battle.attacker.pokemon[j].name
-            self.add_elements(ui.Button(
-                callback=callback,
-                rect=pygame.Rect(110, 25*i+5, 100, 20),
-                text=text
-            ))
-            i, j = i+1, j+1
-        
-        self.cursor = ui.Cursor(self.elements[0:6], "pokemon_menu")
-        self.add_elements(self.cursor)
+        self.add_elements(
+            self.buttons[-1],
+            ui.Image(
+                pos=g.BATTLE_MENU_RECTS["pokemon"][0]["image"],
+                spritesheet="pokemon",
+                name=self.battle.attacker.active_pokemon.name,
+                type="mini"
+            ),
+            ui.Text(
+                pos=g.BATTLE_MENU_RECTS["pokemon"][0]["name"],
+                text=self.battle.attacker.active_pokemon.name,
+                type="small",
+                col="light"
+            )
+        )
 
-        self.header = ui.Text((5, 5), "POKEMON MENU")
-        self.add_elements(self.header)
+        j = 1
+        for i in range(len(self.battle.attacker.pokemon)):
+            if len(self.battle.attacker.pokemon) <= j:
+                break
+            if self.battle.attacker.pokemon[i] == self.battle.attacker.active_pokemon:
+                continue
+
+            self.buttons.append(ui.ImageButton(
+                callback=lambda i=i: self.battle.queue_move({
+                    "type": "switch",
+                    "battler": self.battle.attacker,
+                    "pokemon_idx": i
+                }),
+                pos=g.BATTLE_MENU_RECTS["pokemon"][j]["container"],
+                selected=False,
+                image_selected=ui.image.create_surface_from_spritesheet("menus", "pokemon_long_selected"),
+                image_unselected=ui.image.create_surface_from_spritesheet("menus", "pokemon_long")
+            ))
+            
+            self.add_elements(
+                self.buttons[-1],
+                ui.Image(
+                    pos=g.BATTLE_MENU_RECTS["pokemon"][j]["image"],
+                    spritesheet="pokemon",
+                    name=self.battle.attacker.pokemon[i].name,
+                    type="mini"
+                ),
+                ui.Text(
+                    pos=g.BATTLE_MENU_RECTS["pokemon"][j]["name"],
+                    text=self.battle.attacker.pokemon[i].name,
+                    type="small",
+                    col="light"
+                )
+            )
+
+            j += 1
+
+        self.cursor = ui.Cursor(
+            buttons=self.buttons,
+            type="pokemon_menu",
+            visible=False
+        )
+        self.elements.append(self.cursor)
     
 
     def handle_event(self, event):

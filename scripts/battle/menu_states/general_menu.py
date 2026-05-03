@@ -13,19 +13,19 @@ class GeneralBattleMenu(BattleMenuSceneBaseClass):
         self.add_elements(
             ui.Button(
                 callback=lambda: menus.FightBattleMenu(self.battle).enter_state(),
-                rect=g.GENERAL_MENU_BUTTON_RECTS[0]
+                cursor_pos=g.BATTLE_MENU_RECTS["general"][0]
             ),
             ui.Button(
                 callback=lambda: menus.DialogueMenu(self.battle, "There's no bag!").enter_state(),
-                rect=g.GENERAL_MENU_BUTTON_RECTS[1]
+                cursor_pos=g.BATTLE_MENU_RECTS["general"][1]
             ),
             ui.Button(
                 callback=lambda: menus.PokemonBattleMenu(self.battle).enter_state(),
-                rect=g.GENERAL_MENU_BUTTON_RECTS[2]
+                cursor_pos=g.BATTLE_MENU_RECTS["general"][2]
             ),
             ui.Button(
                 callback=lambda: menus.DialogueMenu(self.battle, "Can't run!").enter_state(),
-                rect=g.GENERAL_MENU_BUTTON_RECTS[3]
+                cursor_pos=g.BATTLE_MENU_RECTS["general"][3]
             )
         )
 
@@ -33,23 +33,23 @@ class GeneralBattleMenu(BattleMenuSceneBaseClass):
 
         self.add_elements(
             ui.Image(
-                pos=(0, 112),
+                pos=g.BATTLE_MENU_RECTS["general"]["backing"],
                 spritesheet="menus",
                 name="backing"
             ),
             ui.Image(
-                pos=(120, 112),
+                pos=g.BATTLE_MENU_RECTS["general"]["menu"],
                 spritesheet="menus",
                 name="general"
             ),
             ui.Text(
-                pos=(10, 122),
+                pos=g.BATTLE_MENU_RECTS["general"]["text"][0],
                 text="What will",
                 type="regular",
                 col="light_alt"
             ),
             ui.Text(
-                pos=(10, 138),
+                pos=g.BATTLE_MENU_RECTS["general"]["text"][1],
                 text=f"{self.battle.attacker.active_pokemon.name.upper()} do?",
                 type="regular",
                 col="light_alt"

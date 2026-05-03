@@ -1,0 +1,14 @@
+{
+    "cursor": [269, 4, 6, 10],
+    "backing": [297, 56, 240, 48],
+    "general": [146, 4, 120, 48],
+    "fight": [297, 4, 240, 48],
+    "attacker_info": [3, 44, 104, 37],
+    "defender_info": [3, 3, 100, 29],
+
+    "pokemon_bg": [250, 301, 240, 160],
+    "pokemon_active": [317, 466, 84, 57],
+    "pokemon_active_selected": [406, 466, 84, 57],
+    "pokemon_long": [162, 474, 150, 24],
+    "pokemon_long_selected": [162, 499, 150, 24]
+}

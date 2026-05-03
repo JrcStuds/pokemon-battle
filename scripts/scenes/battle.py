@@ -9,7 +9,7 @@ import scripts.battle.menu_states as menus
 
 class Battle(scenes.SceneBaseClass):
     def __init__(self, background = "white"):
-        super().__init__(background=pygame.image.load("assets/images/backgrounds.png").convert_alpha().subsurface(g.BACKGROUND_SPRITESHEET_RECT))
+        super().__init__(background=ui.image.create_surface_from_spritesheet("backgrounds", "grass"))
 
         self.menu_stack = []   # menus are layered over one another, top-most is rendered
         self.queued_moves = []   # moves from the player/opponent (from their active pokemon)
@@ -141,7 +141,7 @@ class Battle(scenes.SceneBaseClass):
         match task["type"]:
             case "damage":
                 task["target"].active_pokemon.take_damage(task["damage"])
-                task["target"].update_text()
+                task["target"].update_info()
             case "dialogue":
                 text = task["text"]
                 if "foe" in task.keys():
@@ -154,4 +154,4 @@ class Battle(scenes.SceneBaseClass):
                     g.scene_manager.change_scene(scenes.GameEnd(winner=self.player.active_pokemon.name))
             case "switch":
                 task["battler"].active_pokemon = task["battler"].pokemon[task["pokemon_idx"]]
-                task["battler"].update_text()
+                task["battler"].update_info()
