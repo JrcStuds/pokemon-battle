@@ -43,6 +43,10 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                 type="small",
                 col="light",
                 alignment="right"
+            ),
+            ui.Text(
+                pos=g.BATTLE_MENU_RECTS["pokemon"]["title"],
+                text="Choose a Pokemon."
             )
         )
 
@@ -85,7 +89,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                 ),
                 ui.Text(
                     pos=g.BATTLE_MENU_RECTS["pokemon"][j]["hp_text"],
-                    text=f"{round(self.battle.attacker.active_pokemon.hp)}/{self.battle.attacker.active_pokemon.max_hp}",
+                    text=f"{round(self.battle.attacker.pokemon[i].hp)}/{self.battle.attacker.pokemon[i].max_hp}",
                     type="small",
                     col="light",
                     alignment="right"

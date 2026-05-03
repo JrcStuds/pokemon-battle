@@ -7,14 +7,28 @@ from .menu_base_scene import BattleMenuSceneBaseClass
 
 
 class DialogueMenu(BattleMenuSceneBaseClass):
-    def __init__(self, battle, text, *args):
-        super().__init__(battle=battle, rect=g.DIALOGUE_RECTS["container"], background="lightpink")
+    def __init__(self, battle, text):
+        super().__init__(battle=battle, background=None)
+        self.pos = g.BATTLE_MENU_RECTS["dialogue"]["container"]
 
-        if "empty" in args:
-            self.bg_surf = None
-
-        self.text = ui.Text(pos=self.rect.move(5, 5).topleft, text=text)
-        self.add_elements(self.text)
+        self.text = ui.Text(
+            pos=g.BATTLE_MENU_RECTS["dialogue"]["text"],
+            text=text,
+            col="light_alt"
+        )
+        self.add_elements(
+            ui.Image(
+                pos=self.pos,
+                spritesheet="menus",
+                name="backing"
+            ),
+            ui.Image(
+                pos=g.BATTLE_MENU_RECTS["dialogue"]["cursor"],
+                spritesheet="menus",
+                name="dialogue_cursor"
+            ),
+            self.text
+        )
     
 
     def handle_event(self, event):

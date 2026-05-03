@@ -15,11 +15,11 @@ spritesheets = {
 
 
 keys = {}
-CONTROLS = {
-    "up": [pygame.K_UP, pygame.K_w],         # Joy UP
-    "down": [pygame.K_DOWN, pygame.K_s],     # Joy DOWN
-    "left": [pygame.K_LEFT, pygame.K_a],     # Joy LEFT
-    "right": [pygame.K_RIGHT, pygame.K_d],   # Joy RIGHT
+CONTROLS = {   # only the keyboard controls
+    "up": [pygame.K_UP, pygame.K_w],
+    "down": [pygame.K_DOWN, pygame.K_s],
+    "left": [pygame.K_LEFT, pygame.K_a],
+    "right": [pygame.K_RIGHT, pygame.K_d],
     "a": [pygame.K_x, pygame.K_RETURN],
     "b": [pygame.K_z, pygame.K_RSHIFT],
 }
@@ -43,6 +43,7 @@ BATTLE_MENU_RECTS = {
         3: [pygame.Rect(88, 136, 0, 0), (81, 138)],
     },
     "pokemon": {
+        "title": (8, 136),
         0: {
             "container": (2, 18),
             "image": (0, 24),
@@ -85,6 +86,11 @@ BATTLE_MENU_RECTS = {
             "hp_bar": (169, 102),
             "hp_text": (232, 117)
         }
+    },
+    "dialogue": {
+        "container": (0, 112),
+        "text": (12, 122),
+        "cursor": (217, 144)
     }
 }
 

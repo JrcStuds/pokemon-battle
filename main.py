@@ -92,7 +92,7 @@ class Game():
 
     def run(self):
         while self.running:
-            g.scene_manager.update()
+            g.scene_manager.update()   # check for a scene change before doing loop
             self.handle_events()
             self.update()
             self.draw()
