@@ -13,7 +13,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
         self.buttons = []
 
         self.buttons.append(ui.ImageButton(
-            callback=lambda: menus.DialogueMenu(battle=self.battle, text="Nothing happened..."),
+            callback=lambda: menus.DialogueMenu(battle=self.battle, text="Nothing happened...").enter_state(),
             pos=g.BATTLE_MENU_RECTS["pokemon"][0]["container"],
             selected=True,
             image_selected=ui.image.create_surface_from_spritesheet("menus", "pokemon_active_selected"),
@@ -32,6 +32,17 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                 text=self.battle.attacker.active_pokemon.name,
                 type="small",
                 col="light"
+            ),
+            ui.HpBar(
+                pos=g.BATTLE_MENU_RECTS["pokemon"][0]["hp_bar"],
+                value=round(self.battle.attacker.active_pokemon.hp / self.battle.attacker.active_pokemon.max_hp * 48)
+            ),
+            ui.Text(
+                pos=g.BATTLE_MENU_RECTS["pokemon"][0]["hp_text"],
+                text=f"{round(self.battle.attacker.active_pokemon.hp)}/{self.battle.attacker.active_pokemon.max_hp}",
+                type="small",
+                col="light",
+                alignment="right"
             )
         )
 
@@ -67,6 +78,17 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                     text=self.battle.attacker.pokemon[i].name,
                     type="small",
                     col="light"
+                ),
+                ui.HpBar(
+                    pos=g.BATTLE_MENU_RECTS["pokemon"][j]["hp_bar"],
+                    value=round(self.battle.attacker.pokemon[i].hp / self.battle.attacker.pokemon[i].max_hp * 48)
+                ),
+                ui.Text(
+                    pos=g.BATTLE_MENU_RECTS["pokemon"][j]["hp_text"],
+                    text=f"{round(self.battle.attacker.active_pokemon.hp)}/{self.battle.attacker.active_pokemon.max_hp}",
+                    type="small",
+                    col="light",
+                    alignment="right"
                 )
             )
 

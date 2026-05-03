@@ -32,7 +32,21 @@ class Battler(scenes.SceneBaseClass):
             type="small",
             col="dark_alt"
         )
-        self.add_elements(self.sprite, self.info, self.name)
+        self.hp_bar = ui.HpBar(
+            pos=g.BATTLER_RECTS[self.position]["hp_bar"],
+            value=round(self.active_pokemon.hp / self.active_pokemon.max_hp * 48)
+        )
+        self.add_elements(self.sprite, self.info, self.name, self.hp_bar)
+
+        if self.position == "attacker":
+            self.hp_text = ui.Text(
+                pos=g.BATTLER_RECTS[self.position]["hp_text"],
+                text=f"{round(self.active_pokemon.hp)}/{self.active_pokemon.max_hp}",
+                type="small",
+                col="dark_alt",
+                alignment="right"
+            )
+            self.add_elements(self.hp_text)
 
     
     def execute_random_move(self, target):
@@ -47,6 +61,7 @@ class Battler(scenes.SceneBaseClass):
 
     def update_info(self):
         self.name.update_text(self.active_pokemon.name)
+        self.hp_bar.update_value(round(self.active_pokemon.hp / self.active_pokemon.max_hp * 48))
 
         self.elements.remove(self.sprite)
         self.sprite = ui.Image(
@@ -56,3 +71,6 @@ class Battler(scenes.SceneBaseClass):
             name=self.active_pokemon.name
         )
         self.add_elements(self.sprite)
+
+        if hasattr(self, "hp_text"):
+            self.hp_text.update_text(f"{round(self.active_pokemon.hp)}/{self.active_pokemon.max_hp}")

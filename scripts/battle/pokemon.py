@@ -12,6 +12,7 @@ class Pokemon():
 
         self.level = 1
         self.type = pokemon_db[name]["type"]
+        self.max_hp = pokemon_db[name]["hp"]
         self.hp = pokemon_db[name]["hp"]
         self.attack = pokemon_db[name]["attack"]
         self.defense = pokemon_db[name]["defense"]

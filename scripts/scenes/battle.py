@@ -8,8 +8,8 @@ import scripts.battle.menu_states as menus
 
 
 class Battle(scenes.SceneBaseClass):
-    def __init__(self, background = "white"):
-        super().__init__(background=ui.image.create_surface_from_spritesheet("backgrounds", "grass"))
+    def __init__(self, background = "grass"):
+        super().__init__(background=ui.image.create_surface_from_spritesheet("backgrounds", background))
 
         self.menu_stack = []   # menus are layered over one another, top-most is rendered
         self.queued_moves = []   # moves from the player/opponent (from their active pokemon)

@@ -4,13 +4,16 @@ import assets.config.globals as g
 
 
 class Text():
-    def __init__(self, pos: tuple, text: str, type: str = "regular", col: str = "dark"):
+    def __init__(self, pos: tuple, text: str, type: str = "regular", col: str = "dark", alignment: str = "left"):
         self.pos = pos
         self.surface = None
         self.type = type   # regular or small
         self.col = col   # dark, light, dark_alt, or light_alt
         self.update_text(text)
 
+        self.alignment = alignment
+        if self.alignment == "right":
+            self.pos = (self.pos[0]-self.surface.get_width(), self.pos[1])
 
     def draw(self) -> list:
         blit = [(self.surface, self.pos)]

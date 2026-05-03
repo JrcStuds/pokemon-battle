@@ -46,32 +46,44 @@ BATTLE_MENU_RECTS = {
         0: {
             "container": (2, 18),
             "image": (0, 24),
-            "name": (32, 35)
+            "name": (32, 35),
+            "hp_bar": (17, 57),
+            "hp_text": (80, 61)
         },
         1: {
             "container": (88, 9),
             "image": (82, 2),
             "name": (116, 12),
+            "hp_bar": (169, 16),
+            "hp_text": (232, 21)
         },
         2: {
             "container": (88, 33),
             "image": (82, 26),
             "name": (116, 36),
+            "hp_bar": (169, 40),
+            "hp_text": (232, 45)
         },
         3: {
             "container": (88, 57),
             "image": (82, 50),
             "name": (116, 60),
+            "hp_bar": (169, 64),
+            "hp_text": (232, 69)
         },
         4: {
             "container": (88, 81),
             "image": (82, 74),
             "name": (116, 84),
+            "hp_bar": (169, 88),
+            "hp_text": (232, 93)
         },
         5: {
             "container": (88, 105),
             "image": (82, 98),
             "name": (116, 108),
+            "hp_bar": (169, 102),
+            "hp_text": (232, 117)
         }
     }
 }
@@ -86,12 +98,15 @@ BATTLER_RECTS = {
     "attacker": {
         "info": (126, 74),
         "sprite": (40, 64),
-        "name": (142, 76)
+        "name": (142, 76),
+        "hp_bar": (159, 89),
+        "hp_text": (221, 94)
     },
     "defender": {
         "info": (13, 16),
         "sprite": (144, 24),
-        "name": (20, 18)
+        "name": (20, 18),
+        "hp_bar": (37, 31)
     }
 }
 
@@ -104,4 +119,14 @@ TEXT_COLOUR_PALETTES = {
     "light": [(248, 248, 248), (96, 96, 96)],
     "dark_alt": [(64, 64, 64), (216, 208, 176)],
     "light_alt": [(248, 248, 248), (104, 88, 112)]
+}
+
+
+HP_COLOURS = {
+    "red_light": (208, 40, 40),
+    "red_dark": (128, 0, 0),
+    "yellow_light": (248, 224, 56),
+    "yellow_dark": (200, 168, 8),
+    "green_light": (112, 248, 168),
+    "green_dark": (88, 208, 128)
 }
