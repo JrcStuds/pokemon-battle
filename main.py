@@ -91,6 +91,7 @@ class Game():
         pygame.display.flip()
 
 
+    # main game loop
     def run(self):
         while self.running:
             g.scene_manager.update()   # check for a scene change before doing loop

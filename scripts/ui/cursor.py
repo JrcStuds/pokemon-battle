@@ -15,6 +15,7 @@ class Cursor():
         self.last_idx = None
         self.pos = None
 
+        # sets variables based on the type of cursor
         self.handle_event = None   # cursor HAS a movement behaviour (composition)
         match type:
             case "four_button":
@@ -34,6 +35,8 @@ class Cursor():
             return []
     
 
+    # each handle_event uses the keys pressed in relation to the cursor's position to move to certain index
+    # used for general and fight menus, for when 4 buttons are in a square formation
     def four_button_handle_event(self, event):
         if g.keys["up"] and self.idx >= 2:   # if the cursor is in the bottom 2
             self.idx -= 2
@@ -51,6 +54,7 @@ class Cursor():
             if hasattr(self.cursor_elements[self.idx], "click"):
                 self.cursor_elements[self.idx].click()
 
+    # used only for pokemon select menu, where you can go up and down, but only left and right between the active pokemon and others
     def pokemon_menu_handle_event(self, event):
         if g.keys["up"] and self.idx != 0:
             self.last_idx = self.idx
@@ -72,6 +76,7 @@ class Cursor():
             self.cursor_elements[self.idx].click()
         
     
+    # checks if the buttons at the current and last indecies have the "change_select" function and calls it
     def image_button_change_select(self):
         if hasattr(self.cursor_elements[self.last_idx], "change_select"):
             self.cursor_elements[self.last_idx].change_select()

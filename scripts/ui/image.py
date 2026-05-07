@@ -3,6 +3,8 @@ import assets.config.globals as g
 
 
 
+# takes in a spritesheet, alongside a name identifier and a optional type (depending on the spritesheet)
+# will subsurface the spritesheet surface and return another surface for the specified sprite
 def create_surface_from_spritesheet(spritesheet, name, type = None) -> pygame.Surface:
     with open(f"assets/data/spritesheets/{spritesheet}.json", "r") as file:
         spritesheet_db = json.load(file)

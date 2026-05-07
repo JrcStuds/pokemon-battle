@@ -23,6 +23,7 @@ class Pokemon():
         self.moveset = [Move(self, move) for move in pokemon_db[name]["moveset"]]
 
 
+    # modifies hp stat based of provided damage
     def take_damage(self, damage):
         self.hp -= damage
         if self.hp <= 0.5 and self.hp != 0:
@@ -30,6 +31,7 @@ class Pokemon():
         return
     
 
+    # when called, similar to a move, queues a type=switch object to the battle class to be executed
     def switch(self):
         if self.hp == 0:
             menus.DialogueMenu(self.battler.battle, "No HP left!").enter_state()

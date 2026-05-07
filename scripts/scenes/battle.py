@@ -43,7 +43,8 @@ class Battle(scenes.SceneBaseClass):
 
 
     def update(self, dt):
-        if len(self.queued_moves) == 1:   # when the player has submitted their move, submit the opponent's
+        # when the player has submitted their move, make the opponent submit theirs
+        if len(self.queued_moves) == 1:
             if self.state == "selecting_move":
                 self.defender.execute_random_move(target=self.attacker)
             self.execute_queued_moves()
@@ -58,6 +59,7 @@ class Battle(scenes.SceneBaseClass):
             task = self.battle_tasks.pop(0)  # take the first-most task
             self.process_task(task)
         
+        # pass down update function to all menus
         for menu in self.menu_stack:
             if hasattr(menu, "update"):
                 menu.update(dt)
@@ -71,10 +73,12 @@ class Battle(scenes.SceneBaseClass):
         return blits
 
     
+    # called by the Move class to append a dict to the queued_moves list
     def queue_move(self, move):
         self.queued_moves.append(move)
 
 
+    # switches always go first, and then after that it is ordered by the move's pokemon's speed stat
     def sort_queued_moves(self, queued_moves: list) -> list:
         switches, moves = [], []
         for move in queued_moves:
@@ -88,6 +92,7 @@ class Battle(scenes.SceneBaseClass):
         return queued_moves
 
 
+    # goes through the queued moves list and creates the battle tasks list for this turn's processing_moves phase
     def execute_queued_moves(self):
         self.queued_moves = self.sort_queued_moves(self.queued_moves)
         self.menu_stack = []
@@ -116,6 +121,7 @@ class Battle(scenes.SceneBaseClass):
         self.state = "processing_moves"
 
 
+    # does damage calculation based off typing, stab, random modifiers
     def calculate_damage(self, move, target):
         # select physical/special stats to use
         atk_stat = move.pokemon.attack if move.type == "physical" else move.pokemon.sp_attack
@@ -138,6 +144,7 @@ class Battle(scenes.SceneBaseClass):
         }
 
 
+    # when given a task (in the form of {type=..., args=...}), execute that task based on the type
     def process_task(self, task):
         match task["type"]:
             case "damage":

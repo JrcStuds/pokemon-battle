@@ -26,5 +26,5 @@ class Menu(scenes.SceneBaseClass):
 
     
     def handle_event(self, event):
-        if g.keys["a"]:
+        if g.keys["a"]:   # to start the game
             g.scene_manager.change_scene(scenes.Battle())

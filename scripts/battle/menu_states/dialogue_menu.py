@@ -34,5 +34,5 @@ class DialogueMenu(BattleMenuSceneBaseClass):
     def handle_event(self, event):
         super().handle_event(event)
 
-        if g.keys["a"]:
+        if g.keys["a"] or g.keys["b"]:
             self.exit_state()   # after dialogue is passed, the one under it will show (in the stack)

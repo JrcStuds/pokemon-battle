@@ -22,6 +22,7 @@ class ImageButton():
             self.callback()
 
 
+    # switches the ImageButton's main surface between the selected and unselected surfaces
     def change_select(self):
         self.selected = not self.selected
         self.surface = self.image_selected if self.selected else self.image_unselected

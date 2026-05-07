@@ -15,6 +15,7 @@ class Battler(scenes.SceneBaseClass):
         self.active_pokemon = self.pokemon[0]
         self.position = "attacker" if attacker else "defender"
 
+        # create all ui/visual elements
         self.sprite = ui.Image(
             pos=g.BATTLER_RECTS[self.position]["sprite"],
             spritesheet="pokemon",
@@ -49,6 +50,7 @@ class Battler(scenes.SceneBaseClass):
             self.add_elements(self.hp_text)
 
     
+    # only used for opponent as dummy AI
     def execute_random_move(self, target):
         if not len(self.active_pokemon.moveset):
             raise KeyError(f"pokemon has no moves")
@@ -59,6 +61,7 @@ class Battler(scenes.SceneBaseClass):
         return
     
 
+    # updates the active pokemon's name, hp, sprite in case of a change in any stat
     def update_info(self):
         self.name.update_text(self.active_pokemon.name)
         self.hp_bar.update_value(round(self.active_pokemon.hp / self.active_pokemon.max_hp * 48))

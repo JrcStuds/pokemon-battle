@@ -10,6 +10,7 @@ class GeneralBattleMenu(BattleMenuSceneBaseClass):
     def __init__(self, battle):
         super().__init__(battle=battle)
 
+        # create the buttons for switching to different menus (invisible)
         self.add_elements(
             ui.Button(
                 callback=lambda: menus.FightBattleMenu(self.battle).enter_state(),
@@ -31,6 +32,7 @@ class GeneralBattleMenu(BattleMenuSceneBaseClass):
 
         self.cursor = ui.Cursor(self.elements[0:4], "four_button")
 
+        # create the rest of the visible ui elements
         self.add_elements(
             ui.Image(
                 pos=g.BATTLE_MENU_RECTS["general"]["backing"],

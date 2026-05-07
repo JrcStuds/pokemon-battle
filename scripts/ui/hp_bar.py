@@ -12,6 +12,7 @@ class HpBar():
         self.hp = self.create_hp_surface(value)
 
     
+    # draws the base and coloured bar as separate surfaces
     def draw(self) -> list:
         blits = [
             (self.base, self.pos),
@@ -20,6 +21,8 @@ class HpBar():
         return blits
     
 
+    # creates a surface with the number of filled in pixels based on the provided (HP) value
+    # value can span from 0-48 and a colour is chosen based off the value
     def create_hp_surface(self, value) -> pygame.Surface:
         surface = pygame.Surface((48, 3), pygame.SRCALPHA)
         if value <= 6: col = "red"

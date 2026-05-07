@@ -16,6 +16,7 @@ class Move():
         self.power = moves_db[name]["power"]
 
 
+    # appends self alongside target to the battle's queued moves for execution
     def execute(self, target):
         move = {
             "type": "move",

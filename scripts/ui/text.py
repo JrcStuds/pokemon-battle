@@ -11,6 +11,7 @@ class Text():
         self.col = col   # dark, light, dark_alt, or light_alt
         self.update_text(text)
 
+        # modify the position of the text if the alignment is different based on the surface width
         self.alignment = alignment
         if self.alignment == "right":
             self.pos = (self.pos[0]-self.surface.get_width(), self.pos[1])
@@ -22,6 +23,7 @@ class Text():
         return blit
     
 
+    # creates a surface based on the provided string using self.type and self.col
     def render_text(self, text: str) -> pygame.Surface:
         if not text:
             return pygame.Surface((0, 0))
@@ -44,10 +46,12 @@ class Text():
         return surface
     
 
+    # re-renders text and replaces surface
     def update_text(self, text: str):
         self.surface = self.render_text(text)
 
 
+    # converts all colours in the surface to others defined in g.TEXT_COLOUR_PALETTES
     def palette_swap(self, surface: pygame.Surface, end_palette: str, start_palette: str = "dark"):
         with pygame.PixelArray(surface) as pixels:
             pixels.replace(g.TEXT_COLOUR_PALETTES[start_palette][0], g.TEXT_COLOUR_PALETTES[end_palette][0])

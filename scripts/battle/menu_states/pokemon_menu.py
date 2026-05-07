@@ -10,9 +10,10 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
     def __init__(self, battle, mandatory: bool = False):
         super().__init__(battle=battle, background=ui.image.create_surface_from_spritesheet("menus", "pokemon_bg"))
 
-        self.mandatory = mandatory
+        self.mandatory = mandatory   # used for if current pokemon has just fainted and not allowed to go back
         self.buttons = []
-
+        
+        # add the active pokemon's ui elements
         self.buttons.append(ui.ImageButton(
             callback=lambda: menus.DialogueMenu(battle=self.battle, text="Nothing happened...").enter_state(),
             pos=g.BATTLE_MENU_RECTS["pokemon"][0]["container"],
@@ -50,7 +51,8 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                 text="Choose a Pokemon."
             )
         )
-
+        
+        # loop through the pokemon in the attacker's pokemon list and add ui elements for all non-active pokemon
         j = 1
         for i in range(len(self.battle.attacker.pokemon)):
             if len(self.battle.attacker.pokemon) <= j:

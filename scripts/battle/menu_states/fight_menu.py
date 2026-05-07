@@ -18,6 +18,7 @@ class FightBattleMenu(BattleMenuSceneBaseClass):
             )
         )
 
+        # create 4 buttons that use the names and callbacks of the moves in the active attacking pokemon's moveset
         for i in range(4):
             if len(self.battle.attacker.active_pokemon.moveset) <= i:  # if there aren't enough moves in the moveset
                 self.add_elements(ui.Button(

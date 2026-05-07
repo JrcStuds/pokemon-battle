@@ -10,6 +10,7 @@ class SceneBaseClass():
         self.background = background
         self.elements: list = []   # list of ui elements or other scenes
 
+        # creates background surface to blit if provided one
         self.bg_surf = None
         if type(background) == str:
             self.bg_surf = pygame.Surface(self.rect.size)
