@@ -29,7 +29,7 @@ class Battler(scenes.SceneBaseClass):
         )
         self.name = ui.Text(
             pos=g.BATTLER_RECTS[self.position]["name"],
-            text=self.active_pokemon.name,
+            text=self.active_pokemon.name.title(),
             type="small",
             col="dark_alt"
         )
@@ -63,7 +63,7 @@ class Battler(scenes.SceneBaseClass):
 
     # updates the active pokemon's name, hp, sprite in case of a change in any stat
     def update_info(self):
-        self.name.update_text(self.active_pokemon.name)
+        self.name.update_text(self.active_pokemon.name.title())
         self.hp_bar.update_value(round(self.active_pokemon.hp / self.active_pokemon.max_hp * 48))
 
         self.elements.remove(self.sprite)

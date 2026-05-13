@@ -3,24 +3,80 @@
         "normal": 1,
         "fire": 1,
         "water": 1,
-        "grass": 1
+        "electric": 1,
+        "grass": 1,
+        "poison": 1,
+        "flying": 1,
+        "dark": 1
     },
     "fire": {
         "normal": 1,
         "fire": 0.5,
         "water": 0.5,
-        "grass": 2
+        "electric": 1,
+        "grass": 2,
+        "poison": 1,
+        "flying": 1,
+        "dark": 1
     },
     "water": {
         "normal": 1,
         "fire": 2,
         "water": 0.5,
-        "grass": 0.5
+        "electric": 1,
+        "grass": 0.5,
+        "poison": 1,
+        "flying": 1,
+        "dark": 1
+    },
+    "electric": {
+        "normal": 1,
+        "fire": 1,
+        "water": 2,
+        "electric": 0.5,
+        "grass": 0.5,
+        "poison": 1,
+        "flying": 2,
+        "dark": 1
     },
     "grass": {
         "normal": 1,
         "fire": 0.5,
         "water": 2,
-        "grass": 0.5
+        "electric": 1,
+        "grass": 0.5,
+        "poison": 0.5,
+        "flying": 0.5,
+        "dark": 1
+    },
+    "poison": {
+        "normal": 1,
+        "fire": 1,
+        "water": 1,
+        "electric": 1,
+        "grass": 2,
+        "poison": 0.5,
+        "flying": 1,
+        "dark": 1
+    },
+    "flying": {
+        "normal": 1,
+        "fire": 1,
+        "water": 1,
+        "electric": 0.5,
+        "grass": 2,
+        "poison": 1,
+        "flying": 1,
+        "dark": 1
+    },
+    "dark": {
+        "normal": 1,
+        "fire": 1,
+        "water": 1,
+        "electric": 1,
+        "grass": 1,
+        "poison": 1,
+        "flying": 1,
+        "dark": 1
     }
 }

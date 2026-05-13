@@ -1,23 +1,72 @@
 {
-    "Tackle": {
+    "tackle": {
         "type": "normal",
         "category": "physical",
         "power": 40,
         "accuracy": 100,
-        "pp": 35
+        "lv": 1
     },
-    "Ember": {
+    "quick attack": {
+        "type": "normal",
+        "category": "physical",
+        "power": 40,
+        "accuracy": 100,
+        "lv": 1
+    },
+    "splash": {
+        "type": "normal",
+        "category": "physical",
+        "power": 0,
+        "accuracy": 0,
+        "lv": 1
+    },
+    "ember": {
         "type": "fire",
         "category": "special",
         "power": 40,
         "accuracy": 100,
-        "pp": 25
+        "lv": 4
     },
-    "Vine Whip": {
+    "flamethrower": {
+        "type": "fire",
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "lv": 30
+    },
+    "water gun": {
+        "type": "water",
+        "category": "special",
+        "power": 40,
+        "accuracy": 100,
+        "lv": 3
+    },
+    "thunderbolt": {
+        "type": "electric",
+        "category": "special",
+        "power": 90,
+        "accuracy": 100,
+        "lv": 25
+    },
+    "vine whip": {
         "type": "grass",
         "category": "physical",
         "power": 45,
         "accuracy": 100,
-        "pp": 25
+        "lv": 3
+    },
+    "razor leaf": {
+        "type": "grass",
+        "category": "physical",
+        "power": 55,
+        "accuracy": 95,
+        "lv": 12
+    },
+    "bite": {
+        "type": "dark",
+        "category": "physical",
+        "power": 60,
+        "accuracy": 100,
+        "lv": 12
     }
 }

@@ -31,7 +31,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
             ),
             ui.Text(
                 pos=g.BATTLE_MENU_RECTS["pokemon"][0]["name"],
-                text=self.battle.attacker.active_pokemon.name,
+                text=self.battle.attacker.active_pokemon.name.title(),
                 type="small",
                 col="light"
             ),
@@ -78,7 +78,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                 ),
                 ui.Text(
                     pos=g.BATTLE_MENU_RECTS["pokemon"][j]["name"],
-                    text=self.battle.attacker.pokemon[i].name,
+                    text=self.battle.attacker.pokemon[i].name.title(),
                     type="small",
                     col="light"
                 ),

@@ -12,8 +12,8 @@ class Move():
         self.type = moves_db[name]["type"]
         self.category = moves_db[name]["category"]
         self.accuracy = moves_db[name]["accuracy"]
-        self.pp = moves_db[name]["pp"]
         self.power = moves_db[name]["power"]
+        self.lv = moves_db[name]["lv"]
 
 
     # appends self alongside target to the battle's queued moves for execution

@@ -33,7 +33,7 @@ class FightBattleMenu(BattleMenuSceneBaseClass):
                 callback=lambda i=i: self.battle.attacker.active_pokemon.moveset[i].execute(target=self.battle.defender),
                 rect=g.BATTLE_MENU_RECTS["fight"][i][0],
                 cursor_pos=g.BATTLE_MENU_RECTS["fight"][i][1],
-                text=self.battle.attacker.active_pokemon.moveset[i].name,
+                text=self.battle.attacker.active_pokemon.moveset[i].name.title(),
             ))
         self.cursor = ui.Cursor(self.elements[1:5], "four_button")
         self.add_elements(self.cursor)

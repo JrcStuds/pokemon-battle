@@ -84,7 +84,7 @@ BATTLE_MENU_RECTS = {
             "container": (88, 105),
             "image": (82, 98),
             "name": (116, 108),
-            "hp_bar": (169, 102),
+            "hp_bar": (169, 112),
             "hp_text": (232, 117)
         }
     },

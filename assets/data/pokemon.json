@@ -1,22 +1,122 @@
 {
-    "Charmander": {
-        "type": "fire",
-        "hp": 39,
-        "attack": 52,
-        "defense": 43,
-        "sp_attack": 60,
-        "sp_defense": 50,
-        "speed": 65,
-        "moveset": [ "Tackle", "Ember" ]
-    },
-    "Bulbasaur": {
-        "type": "grass",
+    "bulbasaur": {
+        "type": ["grass"],
         "hp": 45,
         "attack": 49,
         "defense": 49,
         "sp_attack": 65,
         "sp_defense": 65,
         "speed": 45,
-        "moveset": [ "Tackle", "Vine Whip" ]
+        "moveset": ["tackle", "vine whip", "razor leaf"]
+    },
+    "ivysaur": {
+        "type": ["grass", "poison"],
+        "hp": 60,
+        "attack": 62,
+        "defense": 63,
+        "sp_attack": 80,
+        "sp_defense": 80,
+        "speed": 60,
+        "moveset": ["tackle", "vine whip", "razor leaf"]
+    },
+    "venusaur": {
+        "type": ["grass", "poison"],
+        "hp": 80,
+        "attack": 82,
+        "defense": 83,
+        "sp_attack": 100,
+        "sp_defense": 100,
+        "speed": 80,
+        "moveset": ["tackle", "vine whip", "razor leaf"]
+    },
+    "charmander": {
+        "type": ["fire"],
+        "hp": 39,
+        "attack": 52,
+        "defense": 43,
+        "sp_attack": 60,
+        "sp_defense": 50,
+        "speed": 65,
+        "moveset": ["tackle", "ember", "flamethrower"]
+    },
+    "charmeleon": {
+        "type": ["fire"],
+        "hp": 58,
+        "attack": 64,
+        "defense": 58,
+        "sp_attack": 80,
+        "sp_defense": 65,
+        "speed": 80,
+        "moveset": ["tackle", "ember", "flamethrower"]
+    },
+    "charizard": {
+        "type": ["fire", "flying"],
+        "hp": 78,
+        "attack": 84,
+        "defense": 78,
+        "sp_attack": 109,
+        "sp_defense": 85,
+        "speed": 100,
+        "moveset": ["tackle", "ember", "flamethrower"]
+    },
+    "squirtle": {
+        "type": ["water"],
+        "hp": 44,
+        "attack": 48,
+        "defense": 65,
+        "sp_attack": 50,
+        "sp_defense": 64,
+        "speed": 43,
+        "moveset": ["tackle", "water gun", "bite"]
+    },
+    "wartortle": {
+        "type": ["water"],
+        "hp": 59,
+        "attack": 63,
+        "defense": 80,
+        "sp_attack": 65,
+        "sp_defense": 80,
+        "speed": 58,
+        "moveset": ["tackle", "water gun", "bite"]
+    },
+    "blastoise": {
+        "type": ["water"],
+        "hp": 79,
+        "attack": 83,
+        "defense": 100,
+        "sp_attack": 85,
+        "sp_defense": 105,
+        "speed": 78,
+        "moveset": ["tackle", "water gun", "bite"]
+    },
+    "pikachu": {
+        "type": ["electric"],
+        "hp": 35,
+        "attack": 55,
+        "defense": 40,
+        "sp_attack": 50,
+        "sp_defense": 50,
+        "speed": 90,
+        "moveset": ["tackle", "quick attack", "thunderbolt"]
+    },
+    "magikarp": {
+        "type": ["water"],
+        "hp": 20,
+        "attack": 10,
+        "defense": 55,
+        "sp_attack": 15,
+        "sp_defense": 20,
+        "speed": 80,
+        "moveset": ["splash"]
+    },
+    "eevee": {
+        "type": ["normal"],
+        "hp": 55,
+        "attack": 55,
+        "defense": 50,
+        "sp_attack": 45,
+        "sp_defense": 65,
+        "speed": 55,
+        "moveset": ["tackle", "quick attack", "bite"]
     }
 }
