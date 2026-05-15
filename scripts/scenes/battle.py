@@ -21,12 +21,12 @@ class Battle(scenes.SceneBaseClass):
         # create battlers
         self.player = battle.Battler(
             battle=self,
-            pokemon=["blastoise", "venusaur", "pikachu", "charizard", "magikarp", "eevee"],
+            pokemon=[("eevee", 15), ("charizard", 15), ("ivysaur", 15)],
             attacker=True
         )
         self.opponent = battle.Battler(
             battle=self,
-            pokemon=["pikachu"],
+            pokemon=[("wartortle", 15)],
             attacker=False
         )
         self.attacker = self.player
@@ -104,11 +104,14 @@ class Battle(scenes.SceneBaseClass):
                 
                 # used move -> damage -> crit -> type matchup
                 self.battle_tasks.append({"type": "dialogue", "text": f"{move['move'].pokemon.name.title()} used {move['move'].name.title()}", "foe": move["move"].pokemon.battler==self.opponent})
-                self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
-                if damage["critical"]: self.battle_tasks.append({"type": "dialogue", "text": "Critical hit!"})
-                match damage["effective"]:
-                    case 0.5: self.battle_tasks.append({"type": "dialogue", "text": "It's not very effective..."})
-                    case 2: self.battle_tasks.append({"type": "dialogue", "text": "It's super effective!"})
+                if not move["misses"]:
+                    self.battle_tasks.append({"type": "damage", "damage": damage["damage"], "target": move["target"]})
+                    if damage["critical"]: self.battle_tasks.append({"type": "dialogue", "text": "Critical hit!"})
+                    match damage["effective"]:
+                        case 0.5: self.battle_tasks.append({"type": "dialogue", "text": "It's not very effective..."})
+                        case 2: self.battle_tasks.append({"type": "dialogue", "text": "It's super effective!"})
+                else:
+                    self.battle_tasks.append({"type": "dialogue", "text": "But it missed..."})
             
             elif move["type"] == "switch":
                 self.battle_tasks.append({"type": "dialogue", "text": f"Come back, {move['battler'].active_pokemon.name.title()}!"})
@@ -135,7 +138,7 @@ class Battle(scenes.SceneBaseClass):
             type_mult *= self.type_chart[move.type][target_type]   # chart goes [attacking type][defending type]
 
         # damage formula
-        damage = 2 * move.pokemon.level / 5 + 2
+        damage = 2 * move.pokemon.lv / 5 + 2
         damage *= move.power * atk_stat / def_stat / 50 + 2
         damage *= critical * type_mult * stab * random_mult
 

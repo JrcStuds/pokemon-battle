@@ -4,23 +4,23 @@ from .move import Move
 
 
 class Pokemon():
-    def __init__(self, battler, name):
-        self.name = name
+    def __init__(self, battler, args):
+        self.name = args[0]
         self.battler = battler
 
         with open("assets/data/pokemon.json", "r") as file:
             pokemon_db = json.load(file)
-
-        self.level = 1
-        self.type = pokemon_db[name]["type"]
-        self.max_hp = pokemon_db[name]["hp"]
-        self.hp = pokemon_db[name]["hp"]
-        self.attack = pokemon_db[name]["attack"]
-        self.defense = pokemon_db[name]["defense"]
-        self.sp_attack = pokemon_db[name]["sp_attack"]
-        self.sp_defense = pokemon_db[name]["sp_defense"]
-        self.speed = pokemon_db[name]["speed"]
-        self.moveset = [Move(self, move) for move in pokemon_db[name]["moveset"]]
+        
+        self.lv = args[1] if len(args) > 1 else 49
+        self.type = pokemon_db[self.name]["type"]
+        self.max_hp = round(self.modify_stat_hp(pokemon_db[self.name]["hp"], self.lv))
+        self.hp = self.max_hp
+        self.attack = self.modify_stat(pokemon_db[self.name]["attack"], self.lv)
+        self.defense = self.modify_stat(pokemon_db[self.name]["defense"], self.lv)
+        self.sp_attack = self.modify_stat(pokemon_db[self.name]["sp_attack"], self.lv)
+        self.sp_defense = self.modify_stat(pokemon_db[self.name]["sp_defense"], self.lv)
+        self.speed = self.modify_stat(pokemon_db[self.name]["speed"], self.lv)
+        self.moveset = [Move(self, move) for move in pokemon_db[self.name]["moveset"]]
 
 
     # modifies hp stat based of provided damage
@@ -42,3 +42,14 @@ class Pokemon():
             "battler": self.battler,
             "pokemon_idx": self.battler.pokemon.index(self)
         })
+
+
+    def modify_stat(self, base, lv):
+        new = (((2 * base) + 31) * lv / 100) + 5
+        return new
+    
+    def modify_stat_hp(self, base, lv):
+        new = (((2 * base) + 31) * lv / 100) + lv + 10
+        return new
+
+

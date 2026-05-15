@@ -9,17 +9,12 @@ class Text():
         self.surface = None
         self.type = type   # regular or small
         self.col = col   # dark, light, dark_alt, or light_alt
+        self.alignment = alignment
+        self.offset = 0
         self.update_text(text)
 
-        # modify the position of the text if the alignment is different based on the surface width
-        self.alignment = alignment
-        if self.alignment == "right":
-            self.pos = (self.pos[0]-self.surface.get_width(), self.pos[1])
-        if self.alignment == "center":
-            self.pos = (self.pos[0]-(self.surface.get_width()/2), self.pos[1])
-
     def draw(self) -> list:
-        blit = [(self.surface, self.pos)]
+        blit = [(self.surface, (self.pos[0]+self.offset, self.pos[1]))]
         return blit
     
 
@@ -49,6 +44,10 @@ class Text():
     # re-renders text and replaces surface
     def update_text(self, text: str):
         self.surface = self.render_text(text)
+        match self.alignment:
+            case "left": self.offset = 0
+            case "right": self.offset = -(self.surface.get_width())
+            case "center": self.offset = -(self.surface.get_width() / 2)
 
 
     # converts all colours in the surface to others defined in g.TEXT_COLOUR_PALETTES

@@ -11,7 +11,7 @@ class Battler(scenes.SceneBaseClass):
         super().__init__()
         self.battle = battle
 
-        self.pokemon = [Pokemon(self, name) for name in pokemon]
+        self.pokemon = [Pokemon(self, args) for args in pokemon]
         self.active_pokemon = self.pokemon[0]
         self.position = "attacker" if attacker else "defender"
 
@@ -37,7 +37,14 @@ class Battler(scenes.SceneBaseClass):
             pos=g.BATTLER_RECTS[self.position]["hp_bar"],
             value=round(self.active_pokemon.hp / self.active_pokemon.max_hp * 48)
         )
-        self.add_elements(self.sprite, self.info, self.name, self.hp_bar)
+        self.lv = ui.Text(
+            pos=g.BATTLER_RECTS[self.position]["lv_text"],
+            text="Lv" + str(self.active_pokemon.lv),
+            type="small",
+            col="dark_alt",
+            alignment="right"
+        )
+        self.add_elements(self.sprite, self.info, self.name, self.hp_bar, self.lv)
 
         if self.position == "attacker":
             self.hp_text = ui.Text(
@@ -64,6 +71,7 @@ class Battler(scenes.SceneBaseClass):
     # updates the active pokemon's name, hp, sprite in case of a change in any stat
     def update_info(self):
         self.name.update_text(self.active_pokemon.name.title())
+        self.lv.update_text("Lv" + str(self.active_pokemon.lv))
         self.hp_bar.update_value(round(self.active_pokemon.hp / self.active_pokemon.max_hp * 48))
 
         self.elements.remove(self.sprite)

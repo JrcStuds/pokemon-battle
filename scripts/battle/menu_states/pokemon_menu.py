@@ -47,6 +47,12 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                 alignment="right"
             ),
             ui.Text(
+                pos=g.BATTLE_MENU_RECTS["pokemon"][0]["lv_text"],
+                text="Lv" + str(self.battle.attacker.active_pokemon.lv),
+                type="small",
+                col="light"
+            ),
+            ui.Text(
                 pos=g.BATTLE_MENU_RECTS["pokemon"]["title"],
                 text="Choose a Pokemon."
             )

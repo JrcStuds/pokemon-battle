@@ -1,4 +1,4 @@
-import json
+import json, random
 
 
 class Move():
@@ -18,8 +18,10 @@ class Move():
 
     # appends self alongside target to the battle's queued moves for execution
     def execute(self, target):
+        misses = not (random.random() < self.accuracy / 100)
         move = {
             "type": "move",
+            "misses": misses,
             "move": self,
             "target": target
         }

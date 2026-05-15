@@ -50,14 +50,16 @@ BATTLE_MENU_RECTS = {
             "image": (0, 24),
             "name": (32, 35),
             "hp_bar": (17, 57),
-            "hp_text": (80, 61)
+            "hp_text": (80, 61),
+            "lv_text": (80, 60)
         },
         1: {
             "container": (88, 9),
             "image": (82, 2),
             "name": (116, 12),
             "hp_bar": (169, 16),
-            "hp_text": (232, 21)
+            "hp_text": (232, 21),
+            "lv_text": ()
         },
         2: {
             "container": (88, 33),
@@ -107,13 +109,15 @@ BATTLER_RECTS = {
         "sprite": (40, 64),
         "name": (142, 76),
         "hp_bar": (159, 89),
-        "hp_text": (221, 94)
+        "hp_text": (221, 94),
+        "lv_text": (222, 76)
     },
     "defender": {
         "info": (13, 16),
-        "sprite": (144, 24),
+        "sprite": (144, 12),
         "name": (20, 18),
-        "hp_bar": (37, 31)
+        "hp_bar": (37, 31),
+        "lv_text": (100, 18)
     }
 }
 
