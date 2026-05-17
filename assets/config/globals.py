@@ -51,7 +51,7 @@ BATTLE_MENU_RECTS = {
             "name": (32, 35),
             "hp_bar": (17, 57),
             "hp_text": (80, 61),
-            "lv_text": (80, 60)
+            "lv_text": (40, 45)
         },
         1: {
             "container": (88, 9),
@@ -59,35 +59,39 @@ BATTLE_MENU_RECTS = {
             "name": (116, 12),
             "hp_bar": (169, 16),
             "hp_text": (232, 21),
-            "lv_text": ()
+            "lv_text": (128, 21)
         },
         2: {
             "container": (88, 33),
             "image": (82, 26),
             "name": (116, 36),
             "hp_bar": (169, 40),
-            "hp_text": (232, 45)
+            "hp_text": (232, 45),
+            "lv_text": (128, 45)
         },
         3: {
             "container": (88, 57),
             "image": (82, 50),
             "name": (116, 60),
             "hp_bar": (169, 64),
-            "hp_text": (232, 69)
+            "hp_text": (232, 69),
+            "lv_text": (128, 45)
         },
         4: {
             "container": (88, 81),
             "image": (82, 74),
             "name": (116, 84),
             "hp_bar": (169, 88),
-            "hp_text": (232, 93)
+            "hp_text": (232, 93),
+            "lv_text": (128, 45)
         },
         5: {
             "container": (88, 105),
             "image": (82, 98),
             "name": (116, 108),
             "hp_bar": (169, 112),
-            "hp_text": (232, 117)
+            "hp_text": (232, 117),
+            "lv_text": (128, 45)
         }
     },
     "dialogue": {

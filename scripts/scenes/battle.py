@@ -21,12 +21,12 @@ class Battle(scenes.SceneBaseClass):
         # create battlers
         self.player = battle.Battler(
             battle=self,
-            pokemon=[("eevee", 15), ("charizard", 15), ("ivysaur", 15)],
+            pokemon=[("eevee", 9), ("charizard", 15), ("ivysaur", 100)],
             attacker=True
         )
         self.opponent = battle.Battler(
             battle=self,
-            pokemon=[("wartortle", 15)],
+            pokemon=[("wartortle", 15), ("squirtle", 15)],
             attacker=False
         )
         self.attacker = self.player
@@ -113,10 +113,13 @@ class Battle(scenes.SceneBaseClass):
                 else:
                     self.battle_tasks.append({"type": "dialogue", "text": "But it missed..."})
             
-            elif move["type"] == "switch":
+            elif move["type"] == "switch" and move["battler"] == self.player:
                 self.battle_tasks.append({"type": "dialogue", "text": f"Come back, {move['battler'].active_pokemon.name.title()}!"})
-                self.battle_tasks.append({"type": "switch", "battler": move["battler"], "pokemon_idx": move["pokemon_idx"]})
+                self.battle_tasks.append(move)
                 self.battle_tasks.append({"type": "dialogue", "text": f"Let's go, {move['battler'].pokemon[move['pokemon_idx']].name.title()}!"})
+            
+            elif move["type"] == "switch" and move["battler"] == self.opponent:
+                self.battle_tasks.append(move)
                 
             self.battle_tasks.append({"type": "end_move"})
         
@@ -161,15 +164,17 @@ class Battle(scenes.SceneBaseClass):
                     if task["foe"]: text = "Foe " + text
                 menus.DialogueMenu(self, text).enter_state()
             case "end_move":   # check for any dead pokemon (damage has been taken)
-                if round(self.attacker.active_pokemon.hp) <= 0:
-                    for i in range(len(self.attacker.pokemon)):
-                        if self.attacker.pokemon[i].hp > 0: break
-                        if i == len(self.attacker.pokemon)-1:
-                            g.scene_manager.change_scene(scenes.GameEnd(win=False))
-                    menus.PokemonBattleMenu(self, True).enter_state()
-                    self.state = "ending_turn"
-                if round(self.opponent.active_pokemon.hp) <= 0:
-                    g.scene_manager.change_scene(scenes.GameEnd(win=True))
+                for battler in (self.attacker, self.defender):
+                    if round(battler.active_pokemon.hp) <= 0:
+                        for i in range(len(battler.pokemon)):
+                            if battler.pokemon[i].hp > 0: break
+                            if i == len(battler.pokemon)-1:
+                                g.scene_manager.change_scene(scenes.GameEnd(win=(battler==self.opponent)))
+                        if battler == self.player:
+                            menus.PokemonBattleMenu(self, True).enter_state()
+                        elif battler == self.opponent:
+                            battler.switch_random()
+                        self.state = "ending_turn"
             case "switch":
                 task["battler"].active_pokemon = task["battler"].pokemon[task["pokemon_idx"]]
                 task["battler"].update_info()

@@ -39,7 +39,7 @@ class Battler(scenes.SceneBaseClass):
         )
         self.lv = ui.Text(
             pos=g.BATTLER_RECTS[self.position]["lv_text"],
-            text="Lv" + str(self.active_pokemon.lv),
+            text="$l" + str(self.active_pokemon.lv),
             type="small",
             col="dark_alt",
             alignment="right"
@@ -66,6 +66,20 @@ class Battler(scenes.SceneBaseClass):
         self.active_pokemon.moveset[idx].execute(target=target)
 
         return
+    
+
+    def switch_random(self):
+        pokemon_idx = 0
+        for i in range(len(self.pokemon)):
+            if self.pokemon[i].hp > 0:
+                pokemon_idx = i
+                break
+        
+        self.battle.queue_move({
+            "type": "switch",
+            "battler": self,
+            "pokemon_idx": pokemon_idx
+        })
     
 
     # updates the active pokemon's name, hp, sprite in case of a change in any stat

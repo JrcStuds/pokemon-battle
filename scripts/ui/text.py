@@ -25,7 +25,17 @@ class Text():
 
         with open("assets/data/spritesheets/text.json", "r") as file:
             db = json.load(file)
-        text_rects = [db[self.type][char] for char in text]
+        text_rects = []
+        special_char = False
+        for char in text:
+            if char == "$":
+                special_char = True
+                continue
+            if special_char:
+                text_rects.append(db[self.type]["$"][char])
+                special_char = False
+                continue
+            text_rects.append(db[self.type][char])
         surface_width = 0
         for char in text_rects: surface_width += char[2]
         surface = pygame.Surface((surface_width, 14), pygame.SRCALPHA)

@@ -48,7 +48,7 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
             ),
             ui.Text(
                 pos=g.BATTLE_MENU_RECTS["pokemon"][0]["lv_text"],
-                text="Lv" + str(self.battle.attacker.active_pokemon.lv),
+                text="$l" + str(self.battle.attacker.active_pokemon.lv),
                 type="small",
                 col="light"
             ),
@@ -98,7 +98,13 @@ class PokemonBattleMenu(BattleMenuSceneBaseClass):
                     type="small",
                     col="light",
                     alignment="right"
-                )
+                ),
+                ui.Text(
+                    pos=g.BATTLE_MENU_RECTS["pokemon"][j]["lv_text"],
+                    text="$l" + str(self.battle.attacker.pokemon[i].lv),
+                    type="small",
+                    col="light"
+                ),
             )
 
             j += 1
